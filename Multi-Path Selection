@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi-Path Truck Quote Builder</title>
+<style>
+body { font-family: system-ui, sans-serif; background: #f7f9fc; margin:0; padding:2rem; }
+.container { max-width:900px; margin:0 auto; background:white; padding:2rem; border-radius:16px; box-shadow:0 4px 10px rgba(0,0,0,0.08);}
+h1 { text-align:center; color:#1a202c; margin-bottom:1.5rem;}
+button.primary { margin:0.5rem 0; background:#2563eb; color:white; border:none; padding:0.8rem; border-radius:8px; cursor:pointer; font-size:1rem; width:100%; }
+button.primary:hover { background:#1d4ed8;}
+#pathSelection, #configurator, #quoteBuilder { margin-top:1rem; }
+table { width:100%; border-collapse:collapse; margin-top:1rem;}
+th, td { border:1px solid #e2e8f0; padding:0.75rem; text-align:left;}
+th { background:#2563eb; color:white; text-align:center;}
+.actions { text-align:center; }
+.action-btn { margin:0 2px; }
+td[contenteditable="true"]:focus { outline:2px solid #2563eb; background:#eef2ff;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Multi-Path Truck Quote Builder</h1>
+
+  <!-- STEP 1: Path Selection -->
+  <div id="pathSelection">
+    <button class="primary" onclick="startBlankQuote()">Start Blank Quote</button>
+    <button class="primary" onclick="startConfigurator()">Start Configurator</button>
+  </div>
+
+  <!-- STEP 2: Configurator Questions -->
+  <div id="configurator" style="display:none;">
+    <h2>Truck Configurator</h2>
+    <form id="configForm"></form>
+    <button class="primary" onclick="populateQuoteFromConfig()">Generate Quote</button>
+  </div>
+
+  <!-- STEP 3: Quote Builder Table -->
+  <div id="quoteBuilder" style="display:none;">
+    <table id="quoteTable">
+      <thead>
+        <tr><th>Description of Work</th><th>Total $</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="quoteBody">
+        <tr draggable="true">
+          <td contenteditable="true"></td>
+          <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()"></td>
+          <td class="actions">
+            <button class="action-btn add" onclick="insertRow(this)">+</button>
+            <button class="action-btn delete" onclick="deleteRow(this)">🗑</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr><td style="text-align:right;">Total Amount:</td><td id="grandTotal">$0.00</td><td></td></tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<script>
+// ------------------------ STATE ------------------------
+let quoteTable = document.getElementById('quoteBody');
+
+// ------------------------ PATH SELECTION ------------------------
+function startBlankQuote() {
+  document.getElementById('pathSelection').style.display='none';
+  document.getElementById('quoteBuilder').style.display='block';
+}
+
+function startConfigurator() {
+  document.getElementById('pathSelection').style.display='none';
+  document.getElementById('configurator').style.display='block';
+  loadConfiguratorQuestions();
+}
+
+// ------------------------ CONFIGURATOR MOCK ------------------------
+const configQuestions = [
+  {question:"Engine Type", options:[
+    {desc:"Standard Engine", price:12000},
+    {desc:"Turbo Engine", price:18000}
+  ]},
+  {question:"Transmission", options:[
+    {desc:"Manual", price:3000},
+    {desc:"Automatic", price:5000}
+  ]},
+  {question:"Cab Style", options:[
+    {desc:"Regular Cab", price:0},
+    {desc:"Extended Cab", price:2000}
+  ]}
+];
+
+function loadConfiguratorQuestions() {
+  const form = document.getElementById('configForm');
+  form.innerHTML = '';
+  configQuestions.forEach((q,i)=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<label>${q.question}</label><br>`;
+    q.options.forEach((opt,j)=>{
+      const id = `q${i}_opt${j}`;
+      div.innerHTML += `<input type="radio" name="q${i}" id="${id}" value="${j}"><label for="${id}">${opt.desc} ($${opt.price})</label><br>`;
+    });
+    form.appendChild(div);
+  });
+}
+
+// ------------------------ POPULATE QUOTE ------------------------
+function populateQuoteFromConfig() {
+  document.getElementById('configurator').style.display='none';
+  document.getElementById('quoteBuilder').style.display='block';
+  quoteTable.innerHTML = '';
+  configQuestions.forEach((q,i)=>{
+    const selected = document.querySelector(`input[name=q${i}]:checked`);
+    if(selected){
+      const opt = q.options[selected.value];
+      quoteTable.appendChild(createRowElement(opt.desc,opt.price));
+    }
+  });
+  updateTotal();
+}
+
+// ------------------------ ROW MANAGEMENT ------------------------
+function createRowElement(desc='',amt='') {
+  const tr = document.createElement('tr');
+  tr.draggable = true;
+  tr.innerHTML = `<td contenteditable="true">${desc}</td>
+                  <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()">${amt}</td>
+                  <td class="actions">
+                    <button class="action-btn add" onclick="insertRow(this)">+</button>
+                    <button class="action-btn delete" onclick="deleteRow(this)">🗑</button>
+                  </td>`;
+  addDragEvents(tr);
+  return tr;
+}
+
+function insertRow(btn){ btn.closest('tr').after(createRowElement()); }
+function deleteRow(btn){ 
+  const row = btn.closest('tr'); 
+  if(quoteTable.rows.length>1) row.remove();
+  else row.querySelectorAll('td[contenteditable]').forEach(td=>td.innerText=''); 
+  updateTotal(); 
+}
+
+// ------------------------ CURRENCY ------------------------
+function formatCurrency(cell){
+  const num = parseFloat(cell.innerText.replace(/[^0-9.]/g,''));
+  cell.innerText = isNaN(num)?'':num.toLocaleString('en-US',{style:'currency',currency:'USD'});
+  updateTotal();
+}
+
+function updateTotal(){
+  let total=0;
+  quoteTable.querySelectorAll('tr').forEach(r=>{
+    const amt = parseFloat(r.cells[1].innerText.replace(/[^0-9.-]+/g,""));
+    if(!isNaN(amt)) total+=amt;
+  });
+  document.getElementById('grandTotal').innerText = total.toLocaleString('en-US',{style:'currency',currency:'USD'});
+}
+
+// ------------------------ DRAG & DROP ------------------------
+let draggingRow = null;
+function addDragEvents(row){
+  row.addEventListener('dragstart',e=>{draggingRow=e.currentTarget; draggingRow.classList.add('dragging');});
+  row.addEventListener('dragend',e=>{draggingRow.classList.remove('dragging'); draggingRow=null; updateTotal();});
+  row.addEventListener('dragover',e=>{e.preventDefault(); moveDraggingRow(e.clientY);});
+}
+function moveDraggingRow(y){
+  const rows=[...quoteTable.querySelectorAll('tr')].filter(r=>r!==draggingRow);
+  let inserted=false;
+  for(let r of rows){
+    const rect=r.getBoundingClientRect();
+    if(y<rect.top+rect.height/2){ quoteTable.insertBefore(draggingRow,r); inserted=true; break;}
+  }
+  if(!inserted) quoteTable.appendChild(draggingRow);
+}
+</script>
+</body>
+</html>
