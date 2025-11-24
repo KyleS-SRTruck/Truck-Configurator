@@ -76,7 +76,29 @@
     "Switch Location Axles": "Has Factory in Dash",
     "Switch Location Vibrator": "Has Factory in Dash",
     "Switch Location Box Spray Bar": "Has Factory in Dash",
-    "Switch Location Tarp": "Has Factory in Dash"
+    "Switch Location Tarp": "Has Factory in Dash",
+
+    "Bibeau Body Options": {
+      "Series": "Select One",
+      "Length": "Select One",
+      "Side Ht. F": "Select One",
+      "Side Ht. R": "Select One",
+      "Dog House Depth": "Select One",
+      "Bumper": "Straight",
+      "Vibrator Plate": "Reinforcement",
+      "Extra Ovals in Rear": "Select One",
+      "Inside Steps": "Ship Loose",
+      "Door Slope": "Straight",
+      "Hi-Lift Tailgate": "Select One",
+      "Coal Door": "No",
+      "Twistlocks": "No",
+      "Cab Shield": "No",
+      "Side Plate": "Ship Loose (1)",
+      "Install Kit": "",
+      "Tailgate Cylinder": "3.25\"",
+      "Light Kit": "LED Kit",
+      "Body Prop": "Std. for BVA"
+    }
   },
   {
     "Simple Yes/No": "No",
@@ -155,6 +177,28 @@
     "Switch Location Axles": "Install Factory Switch in Dash",
     "Switch Location Vibrator": "Install Factory Switch in Dash",
     "Switch Location Box Spray Bar": "Install Factory Switch in Dash",
-    "Switch Location Tarp": "Install Factory Switch in Dash"
+    "Switch Location Tarp": "Install Factory Switch in Dash",
+
+    "Bibeau Body Options": {
+      "Series": "Select One",
+      "Length": "Select One",
+      "Side Ht. F": "Select One",
+      "Side Ht. R": "Select One",
+      "Dog House Depth": "Select One",
+      "Bumper": "Straight",
+      "Vibrator Plate": "Reinforcement",
+      "Extra Ovals in Rear": "Select One",
+      "Inside Steps": "Ship Loose",
+      "Door Slope": "Straight",
+      "Hi-Lift Tailgate": "Select One",
+      "Coal Door": "No",
+      "Twistlocks": "No",
+      "Cab Shield": "No",
+      "Side Plate": "Ship Loose (1)",
+      "Install Kit": "",
+      "Tailgate Cylinder": "3.25\"",
+      "Light Kit": "LED Kit",
+      "Body Prop": "Std. for BVA"
+    }
   }
 ]
