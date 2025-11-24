@@ -234,7 +234,31 @@ function startBlankQuote() {
 }
 
 function startTruckConfigurator() {
-  alert("Truck Configurator path selected. Implement your configurator questions here.");
+  // Show quote section (optional)
+  document.getElementById('quoteSection').style.display = 'block';
+
+  // Fetch JSON questions/values
+  fetch('/mnt/data/truck_config.json')   // <-- Use the uploaded file path
+    .then(response => response.json())
+    .then(data => {
+      // Clear existing rows
+      const tbody = document.getElementById('quoteBody');
+      tbody.innerHTML = '';
+
+      // Loop through each truck option and create a row
+      data.forEach(truck => {
+        const desc = `Truck Model: ${truck["Chassis Make/Model"]}\nTransmission: ${truck["Transmission"]}\nBody Length: ${truck["Body Length"]}`;
+        const amt = ''; // leave blank, user can fill
+        tbody.appendChild(createRowElement(desc, amt));
+      });
+
+      // Update total (mostly zero since amounts are blank)
+      updateTotal();
+    })
+    .catch(err => {
+      console.error("Failed to load truck configuration JSON:", err);
+      alert("Failed to load truck configuration data.");
+    });
 }
 
 /* ---------------------------------------------------
