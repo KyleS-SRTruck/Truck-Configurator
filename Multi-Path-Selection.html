@@ -524,41 +524,82 @@ document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
    Configurator Questions
 --------------------------- */
 async function loadConfiguratorQuestions() {
-    const url = "https://raw.githubusercontent.com/KyleS-SRTruck/Truck-Configurator/main/Configurator-Questions.json";
+    // Update this path to your local JSON file
+    const url = 'https://raw.githubusercontent.com/KyleS-SRTruck/Truck-Configurator/main/Configurator-Questions.json';
+
     try {
         const response = await fetch(url);
         const data = await response.json();
+
+        // Only using first truck for configurator preview
+        const truck = data[0];
+
+        // Ensure Bibeau Body Options exists
+        const bodyOptions = truck["Bibeau Body Options"];
+        if (!bodyOptions) {
+            alert("No Bibeau Body Options found in JSON.");
+            return;
+        }
+
         const questionsArea = document.getElementById("questionsArea");
-        questionsArea.innerHTML = "";
-        const allKeys = Object.keys(data[0]);
-        allKeys.forEach(key => {
-            const options = [...new Set(data.map(row => row[key]).filter(v => v !== "" && v != null))];
+        questionsArea.innerHTML = ""; // clear previous fields
+
+        // Loop over each body option
+        Object.keys(bodyOptions).forEach(key => {
+            const value = bodyOptions[key];
+
+            // Create wrapper
             const rowDiv = document.createElement("div");
             rowDiv.className = "question-row";
+            rowDiv.style.marginBottom = "12px";
+
+            // Label
             const label = document.createElement("label");
             label.textContent = key + ": ";
             label.className = "question-label";
-            const select = document.createElement("select");
-            select.name = key;
-            const placeholder = document.createElement("option");
-            placeholder.value = "";
-            placeholder.textContent = "-- Select Option --";
-            placeholder.disabled = true;
-            placeholder.selected = true;
-            select.appendChild(placeholder);
-            options.forEach(option => {
-                const opt = document.createElement("option");
-                opt.value = option;
-                opt.textContent = option;
-                select.appendChild(opt);
-            });
+            label.style.display = "inline-block";
+            label.style.width = "200px";
+
+            // Input / select
+            let input;
+            if (value === "Select One") {
+                input = document.createElement("select");
+                input.name = key;
+
+                // Placeholder option
+                const placeholder = document.createElement("option");
+                placeholder.value = "";
+                placeholder.textContent = "-- Select Option --";
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                input.appendChild(placeholder);
+
+                // Populate options based on JSON values
+                const uniqueOptions = [...new Set(
+                    data.map(t => t["Bibeau Body Options"][key]).filter(v => v && v !== "Select One")
+                )];
+                uniqueOptions.forEach(optVal => {
+                    const opt = document.createElement("option");
+                    opt.value = optVal;
+                    opt.textContent = optVal;
+                    input.appendChild(opt);
+                });
+            } else {
+                input = document.createElement("input");
+                input.type = "text";
+                input.value = value;
+            }
+
             rowDiv.appendChild(label);
-            rowDiv.appendChild(select);
+            rowDiv.appendChild(input);
             questionsArea.appendChild(rowDiv);
         });
+
         document.getElementById("configuratorContainer").classList.remove("hidden");
+
     } catch (err) {
         console.error("Error loading configurator data:", err);
+        alert("Failed to load configurator JSON.");
     }
 }
 </script>
