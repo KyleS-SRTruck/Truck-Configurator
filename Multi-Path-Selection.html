@@ -238,7 +238,7 @@ function startTruckConfigurator() {
   document.getElementById('quoteSection').style.display = 'block';
 
   // Fetch JSON questions/values
-  fetch('/mnt/data/Configurator-Questions.json')   // <-- Use the uploaded file path
+  fetch('Configurator-Questions.json')   // <-- Use the uploaded file path
     .then(response => response.json())
     .then(data => {
       // Clear existing rows
