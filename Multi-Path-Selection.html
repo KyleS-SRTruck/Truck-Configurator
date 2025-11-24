@@ -171,8 +171,13 @@ button.primary:hover {
   <!-- Multi-Path Selection -->
   <div id="startSelection">
     <button class="primary" onclick="startBlankQuote()">Start Blank Quote</button>
-    <button class="primary" onclick="startTruckConfigurator()">Truck Configurator Questions</button>
+    <button class="primary" onclick="loadConfiguratorQuestions()">Truck Configurator Questions</button>
   </div>
+  <!-- Truck Configurator Questions UI -->
+<div id="configuratorContainer" class="hidden" style="margin-top:20px;">
+    <h2>Truck Configurator Questions</h2>
+    <div id="questionsArea"></div>
+</div>
 
   <!-- Save / Import Controls -->
   <div id="saveControls">
@@ -581,6 +586,70 @@ function loadQuote(key) {
 }
 
 document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
+  
+async function loadConfiguratorQuestions() {
+    const url = "https://raw.githubusercontent.com/KyleS-SRTruck/Truck-Configurator/main/Configurator-Questions.json";
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const questionsArea = document.getElementById("questionsArea");
+        questionsArea.innerHTML = ""; // Clear previous results
+
+        // Get all keys (questions)
+        const allKeys = Object.keys(data[0]);
+
+        // Build UI for each question
+        allKeys.forEach(key => {
+
+            // Collect all unique choices for this question
+            const options = [...new Set(data.map(row => row[key]).filter(v => v !== "" && v != null))];
+
+            // Create wrapper
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "question-row";
+            rowDiv.style.marginBottom = "12px";
+
+            // Label
+            const label = document.createElement("label");
+            label.textContent = key + ": ";
+            label.className = "question-label";
+            label.style.display = "inline-block";
+            label.style.width = "260px";
+
+            // Dropdown
+            const select = document.createElement("select");
+            select.name = key;
+
+            // Add placeholder
+            const placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = "-- Select Option --";
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            select.appendChild(placeholder);
+
+            // Add actual options
+            options.forEach(option => {
+                const opt = document.createElement("option");
+                opt.value = option;
+                opt.textContent = option;
+                select.appendChild(opt);
+            });
+
+            rowDiv.appendChild(label);
+            rowDiv.appendChild(select);
+
+            questionsArea.appendChild(rowDiv);
+        });
+
+        document.getElementById("configuratorContainer").classList.remove("hidden");
+
+    } catch (err) {
+        console.error("Error loading configurator data:", err);
+    }
+}  
 </script>
 
 </body>
