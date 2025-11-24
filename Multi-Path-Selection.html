@@ -157,10 +157,19 @@ button.primary:hover {
   text-align:center;
   margin-bottom:1rem;
 }
+.question-row {
+  margin-bottom: 12px;
+}
+.question-label {
+  display: inline-block;
+  width: 260px;
+}
 @media (max-width: 480px) {
   .action-btn { width: 28px; height: 26px; font-size: 0.8rem; }
   .actions { width: 86px; }
   .container { padding: 1rem; }
+  .question-label { width: 100%; margin-bottom: 4px; }
+  .question-row select { width: 100%; }
 }
 </style>
 </head>
@@ -173,11 +182,12 @@ button.primary:hover {
     <button class="primary" onclick="startBlankQuote()">Start Blank Quote</button>
     <button class="primary" onclick="loadConfiguratorQuestions()">Truck Configurator Questions</button>
   </div>
+
   <!-- Truck Configurator Questions UI -->
-<div id="configuratorContainer" class="hidden" style="margin-top:20px;">
+  <div id="configuratorContainer" class="hidden" style="margin-top:20px;">
     <h2>Truck Configurator Questions</h2>
     <div id="questionsArea"></div>
-</div>
+  </div>
 
   <!-- Save / Import Controls -->
   <div id="saveControls">
@@ -191,7 +201,7 @@ button.primary:hover {
     </div>
   </div>
 
-  <!-- Quote Table (hidden initially) -->
+  <!-- Quote Table -->
   <div id="quoteSection" style="display:none; margin-top:2rem;">
     <table id="quoteTable" aria-label="Quote table">
       <thead>
@@ -231,49 +241,16 @@ button.primary:hover {
 </div>
 
 <script>
-/* ---------------------------------------------------
+/* ---------------------------
    Multi-Path Logic
---------------------------------------------------- */
+--------------------------- */
 function startBlankQuote() {
   document.getElementById('quoteSection').style.display = 'block';
 }
 
-function startTruckConfigurator() {
-  // Show quote section (optional)
-  document.getElementById('quoteSection').style.display = 'block';
-
-  // Fetch JSON questions/values
-  fetch('Configurator-Questions.json')   // <-- Use the uploaded file path
-    .then(response => response.json())
-    .then(data => {
-      // Clear existing rows
-      const tbody = document.getElementById('quoteBody');
-      tbody.innerHTML = '';
-
-      // Loop through each truck option and create a row
-      data.forEach(truck => {
-        const desc = `Truck Model: ${truck["Chassis Make/Model"]}\nTransmission: ${truck["Transmission"]}\nBody Length: ${truck["Body Length"]}`;
-        const amt = ''; // leave blank, user can fill
-        tbody.appendChild(createRowElement(desc, amt));
-      });
-
-      // Update total (mostly zero since amounts are blank)
-      updateTotal();
-    })
-    .catch(err => {
-      console.error("Failed to load truck configuration JSON:", err);
-      alert("Failed to load truck configuration data.");
-    });
-}
-
-/* ---------------------------------------------------
-   State
---------------------------------------------------- */
-let currentQuoteKey = null;
-
-/* ---------------------------------------------------
-   Row Management
---------------------------------------------------- */
+/* ---------------------------
+   Quote Table Management
+--------------------------- */
 function createRowElement(desc = '', amt = '') {
   const newRow = document.createElement('tr');
   newRow.setAttribute('draggable', 'true');
@@ -305,9 +282,9 @@ function deleteRow(btn) {
   updateTotal();
 }
 
-/* ---------------------------------------------------
+/* ---------------------------
    Currency
---------------------------------------------------- */
+--------------------------- */
 function formatCurrency(cell) {
   const raw = cell.innerText.replace(/[^0-9.]/g, '');
   const num = parseFloat(raw);
@@ -327,9 +304,9 @@ function updateTotal() {
     total.toLocaleString('en-US', { style:'currency', currency:'USD' });
 }
 
-/* ---------------------------------------------------
+/* ---------------------------
    Drag & Drop
---------------------------------------------------- */
+--------------------------- */
 let draggingRow = null;
 function addDragEvents(row) {
   row.addEventListener('dragstart', e => {
@@ -365,20 +342,18 @@ function moveDraggingRow(pointerY) {
 
 document.querySelectorAll('#quoteBody tr').forEach(addDragEvents);
 
-/* ---------------------------------------------------
+/* ---------------------------
    Copy to Striven
---------------------------------------------------- */
+--------------------------- */
 function copyQuoteHTML() {
   const rows = document.querySelectorAll('#quoteBody tr');
   if (!rows.length) return alert('No rows to copy.');
-
   let total = 0;
   let html = `<table border="1" cellpadding="5" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:12pt;">
   <thead><tr>
     <th>Description of Work to be Performed</th>
     <th>Total $</th>
   </tr></thead><tbody>`;
-
   rows.forEach((row,index)=>{
     let desc = row.cells[0].innerText.trim().replace(/\n/g,'<br>');
     let amt = parseFloat(row.cells[1].innerText.replace(/[^0-9.]/g,'')) || 0;
@@ -386,17 +361,14 @@ function copyQuoteHTML() {
     let bgColor = index%2===1 ? ' bgcolor="#e6f2ff"' : '';
     html += `<tr${bgColor}><td>${desc}</td><td style="text-align:right">${amt.toLocaleString('en-US',{style:'currency',currency:'USD'})}</td></tr>`;
   });
-
   html += `<tr><td style="text-align:right;font-weight:bold">Total</td>
   <td style="text-align:right;font-weight:bold">${total.toLocaleString('en-US',{style:'currency', currency:'USD'})}</td></tr></tbody></table>`;
-
   const temp = document.createElement('textarea');
   temp.value = html.trim();
   document.body.appendChild(temp);
   temp.select();
   document.execCommand('copy');
   temp.remove();
-
   const msg = document.getElementById('message');
   msg.style.display='block';
   msg.style.opacity='1';
@@ -407,76 +379,57 @@ function copyQuoteHTML() {
   },1800);
 }
 
-/* ---------------------------------------------------
+/* ---------------------------
    Import HTML
---------------------------------------------------- */
+--------------------------- */
 function importQuoteHTML() {
   const html = prompt("Paste your HTML quote from Striven:");
   if (!html) return;
-
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
   const trs = doc.querySelectorAll("tbody tr");
   const tbody = document.getElementById("quoteBody");
-
   tbody.innerHTML = "";
   trs.forEach(tr => {
     const desc = tr.cells[0].innerText;
     const amt = tr.cells[1].innerText;
     tbody.appendChild(createRowElement(desc, amt));
   });
-
   updateTotal();
 }
 
-/* ---------------------------------------------------
+/* ---------------------------
    Save / Load / Delete
---------------------------------------------------- */
+--------------------------- */
+let currentQuoteKey = null;
 function makeTimestamp() {
   const now = new Date();
   const pad = (n)=>String(n).padStart(2,'0');
   return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
 }
-
-function getAllSaved() {
-  return JSON.parse(localStorage.getItem('savedQuotes') || '{}');
-}
-
-function setAllSaved(obj) {
-  localStorage.setItem('savedQuotes', JSON.stringify(obj));
-}
-
+function getAllSaved() { return JSON.parse(localStorage.getItem('savedQuotes') || '{}'); }
+function setAllSaved(obj) { localStorage.setItem('savedQuotes', JSON.stringify(obj)); }
 function saveQuote() {
   const nameInput = document.getElementById('quoteName');
   let baseName = nameInput.value.trim();
   if (!baseName) return alert("Please enter a quote name.");
-
   const all = getAllSaved();
-
   if (currentQuoteKey && currentQuoteKey.startsWith(baseName)) {
     if (!confirm(`Overwrite "${currentQuoteKey}"?`)) return;
-
     const ts = makeTimestamp();
     const newKey = `${baseName} — ${ts}`;
-    all[newKey] = {
-      html: document.getElementById('quoteBody').innerHTML,
-      ts: ts
-    };
-
+    all[newKey] = { html: document.getElementById('quoteBody').innerHTML, ts: ts };
     delete all[currentQuoteKey];
     setAllSaved(all);
-
     currentQuoteKey = newKey;
     loadSavedQuotesList();
     alert("Quote updated.");
     return;
   }
-
   const ts = makeTimestamp();
   const key = `${baseName} — ${ts}`;
   all[key] = { html: document.getElementById('quoteBody').innerHTML, ts };
   setAllSaved(all);
-
   currentQuoteKey = key;
   loadSavedQuotesList();
   alert(`Quote "${key}" saved.`);
@@ -484,7 +437,6 @@ function saveQuote() {
 
 function toggleSavedQuotesPanel() {
   const panel = document.getElementById("savedQuotesPanel");
-
   if (panel.style.display === "block") {
     panel.style.display = "none";
   } else {
@@ -496,38 +448,30 @@ function toggleSavedQuotesPanel() {
 function loadSavedQuotesList() {
   const list = document.getElementById('savedQuotesList');
   list.innerHTML = "";
-
   const all = getAllSaved();
   const entries = Object.keys(all).sort((a,b)=> new Date(all[b].ts) - new Date(all[a].ts));
-
   entries.forEach(key=>{
     const item = all[key];
     const row = document.createElement('div');
     row.className = 'saved-item';
-
     const name = document.createElement('span');
     name.textContent = key;
     name.style.fontWeight='600';
     name.style.cursor='pointer';
     name.onclick = ()=>loadQuote(key);
-
     const meta = document.createElement('span');
     meta.className='meta';
     meta.textContent=item.ts;
-
     const left=document.createElement('div');
     left.style.display='flex';
     left.style.flexDirection='column';
     left.appendChild(name);
     left.appendChild(meta);
-
     const actions=document.createElement('div');
     actions.className='row-actions';
-
     const loadBtn=document.createElement('button');
     loadBtn.textContent='Load';
     loadBtn.onclick=()=>loadQuote(key);
-
     const delBtn=document.createElement('button');
     delBtn.textContent='Delete';
     delBtn.onclick=()=>{
@@ -535,10 +479,8 @@ function loadSavedQuotesList() {
         deleteSavedQuote(key);
       }
     };
-
     actions.appendChild(loadBtn);
     actions.appendChild(delBtn);
-
     row.appendChild(left);
     row.appendChild(actions);
     list.appendChild(row);
@@ -549,12 +491,10 @@ function deleteSavedQuote(key){
   const all = getAllSaved();
   delete all[key];
   setAllSaved(all);
-
   if (currentQuoteKey === key) {
     currentQuoteKey = null;
     document.getElementById('quoteName').value = "";
   }
-
   loadSavedQuotesList();
 }
 
@@ -562,94 +502,65 @@ function loadQuote(key) {
   const all = getAllSaved();
   const entry = all[key];
   if (!entry) return;
-
   const temp = document.createElement('tbody');
   temp.innerHTML = entry.html;
-
   const tbody = document.getElementById('quoteBody');
   tbody.innerHTML="";
-
   [...temp.querySelectorAll('tr')].forEach(r => {
     const desc = r.cells[0].innerText;
     const amt = r.cells[1].innerText;
     tbody.appendChild(createRowElement(desc, amt));
   });
-
   currentQuoteKey = key;
-
   const baseName = key.split(" — ")[0];
   document.getElementById('quoteName').value = baseName;
-
   updateTotal();
-
   document.getElementById('savedQuotesPanel').style.display='none';
 }
 
 document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
-  
+
+/* ---------------------------
+   Configurator Questions
+--------------------------- */
 async function loadConfiguratorQuestions() {
     const url = "https://raw.githubusercontent.com/KyleS-SRTruck/Truck-Configurator/main/Configurator-Questions.json";
-
     try {
         const response = await fetch(url);
         const data = await response.json();
-
         const questionsArea = document.getElementById("questionsArea");
-        questionsArea.innerHTML = ""; // Clear previous results
-
-        // Get all keys (questions)
+        questionsArea.innerHTML = "";
         const allKeys = Object.keys(data[0]);
-
-        // Build UI for each question
         allKeys.forEach(key => {
-
-            // Collect all unique choices for this question
             const options = [...new Set(data.map(row => row[key]).filter(v => v !== "" && v != null))];
-
-            // Create wrapper
             const rowDiv = document.createElement("div");
             rowDiv.className = "question-row";
-            rowDiv.style.marginBottom = "12px";
-
-            // Label
             const label = document.createElement("label");
             label.textContent = key + ": ";
             label.className = "question-label";
-            label.style.display = "inline-block";
-            label.style.width = "260px";
-
-            // Dropdown
             const select = document.createElement("select");
             select.name = key;
-
-            // Add placeholder
             const placeholder = document.createElement("option");
             placeholder.value = "";
             placeholder.textContent = "-- Select Option --";
             placeholder.disabled = true;
             placeholder.selected = true;
             select.appendChild(placeholder);
-
-            // Add actual options
             options.forEach(option => {
                 const opt = document.createElement("option");
                 opt.value = option;
                 opt.textContent = option;
                 select.appendChild(opt);
             });
-
             rowDiv.appendChild(label);
             rowDiv.appendChild(select);
-
             questionsArea.appendChild(rowDiv);
         });
-
         document.getElementById("configuratorContainer").classList.remove("hidden");
-
     } catch (err) {
         console.error("Error loading configurator data:", err);
     }
-}  
+}
 </script>
 
 </body>
