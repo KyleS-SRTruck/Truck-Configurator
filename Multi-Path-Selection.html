@@ -5,34 +5,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>S&R Truck Quote Builder</title>
 <style>
-body { font-family: system-ui, sans-serif; background:#f7f9fc; margin:0; padding:2rem; }
-.container { max-width:900px; margin:0 auto; background:white; padding:2rem; border-radius:16px; box-shadow:0 4px 10px rgba(0,0,0,0.08); }
-h1 { text-align:center; color:#1a202c; margin-bottom:1.5rem; }
-table { width:100%; border-collapse:collapse; margin-top:2rem; background:#f9fafb; }
-th, td { border:1px solid #e2e8f0; padding:0.75rem; text-align:left; vertical-align:middle; }
-th { background:#2563eb; color:white; text-align:center; }
-tr:nth-child(even) td { background:#f1f5f9; }
-td[contenteditable="true"]:focus { outline:2px solid #2563eb; background:#eef2ff; }
-tfoot td { font-weight:bold; background:#e0e7ff; }
-.actions { text-align:center; white-space:nowrap; width:100px; }
-.action-btn { display:inline-block; border:none; border-radius:6px; cursor:pointer; font-size:0.9rem; line-height:1; margin:0 2px; width:32px; height:28px; transition:all 0.15s ease; }
-.action-btn.add { background-color:#e5e7eb; color:#4b5563; }
-.action-btn.add:hover { background-color:#cbd5e1; }
-.action-btn.delete { background-color:#ef4444; color:white; }
-.action-btn.delete:hover { background-color:#dc2626; }
-.dragging { opacity:0.6; background-color:#dbeafe !important; }
-button.primary { margin-top:1rem; width:100%; background-color:#2563eb; color:white; border:none; padding:0.8rem; font-size:1.1rem; border-radius:8px; cursor:pointer; transition:background 0.2s ease-in-out; }
-button.primary:hover { background-color:#1d4ed8; }
-#message { text-align:center; color:#16a34a; font-weight:600; margin-top:1rem; display:none; }
-#saveControls { margin-top:1rem; display:flex; gap:10px; flex-direction:column; }
-#savedQuotesPanel { display:none; margin-top:1rem; background:white; padding:15px; border:1px solid #ddd; border-radius:8px; }
-.saved-item { display:flex; justify-content:space-between; align-items:center; padding:8px; margin-bottom:6px; background:#f7f7f7; border-radius:6px; }
-.saved-item button { background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:5px; cursor:pointer; }
-.saved-item button:hover { background:#dc2626; }
-.saved-item .meta { font-size:12px; color:#666; margin-left:8px; }
-.row-actions { display:flex; gap:8px; align-items:center; }
-#pathSelector { margin-bottom:1rem; display:flex; gap:10px; justify-content:center; }
-@media (max-width:480px) { .action-btn { width:28px; height:26px; font-size:0.8rem; } .actions { width:86px; } .container { padding:1rem; } }
+body {
+  font-family: system-ui, sans-serif;
+  background: #f7f9fc;
+  margin: 0;
+  padding: 2rem;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+h1 {
+  text-align: center;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: #f9fafb;
+}
+th, td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+}
+th {
+  background: #2563eb;
+  color: white;
+  text-align: center;
+}
+tr:nth-child(even) td {
+  background: #f1f5f9;
+}
+td[contenteditable="true"]:focus {
+  outline: 2px solid #2563eb;
+  background: #eef2ff;
+}
+tfoot td {
+  font-weight: bold;
+  background: #e0e7ff;
+}
+.actions {
+  text-align: center;
+  white-space: nowrap;
+  width: 100px;
+}
+.action-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  margin: 0 2px;
+  width: 32px;
+  height: 28px;
+  transition: all 0.15s ease;
+}
+.action-btn.add {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+.action-btn.add:hover {
+  background-color: #cbd5e1;
+}
+.action-btn.delete {
+  background-color: #ef4444;
+  color: white;
+}
+.action-btn.delete:hover {
+  background-color: #dc2626;
+}
+.dragging {
+  opacity: 0.6;
+  background-color: #dbeafe !important;
+}
+button.primary {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+button.primary:hover {
+  background-color: #1d4ed8;
+}
+#message {
+  text-align: center;
+  color: #16a34a;
+  font-weight: 600;
+  margin-top: 1rem;
+  display: none;
+}
+#saveControls {
+  margin-top: 1rem;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+#savedQuotesPanel {
+  display:none;
+  margin-top: 1rem;
+  background:white;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+.saved-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px;
+  margin-bottom:6px;
+  background:#f7f7f7;
+  border-radius:6px;
+}
+.saved-item button {
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:4px 8px;
+  border-radius:5px;
+  cursor:pointer;
+}
+.saved-item button:hover {
+  background:#dc2626;
+}
+.saved-item .meta {
+  font-size: 12px;
+  color: #666;
+  margin-left: 8px;
+}
+.row-actions {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+#startSelection {
+  text-align:center;
+  margin-bottom:1rem;
+}
+@media (max-width: 480px) {
+  .action-btn { width: 28px; height: 26px; font-size: 0.8rem; }
+  .actions { width: 86px; }
+  .container { padding: 1rem; }
+}
 </style>
 </head>
 <body>
@@ -40,42 +169,12 @@ button.primary:hover { background-color:#1d4ed8; }
   <h1>SR Truck Quote Builder</h1>
 
   <!-- Multi-Path Selection -->
-  <div id="pathSelector">
-    <button class="primary" onclick="selectPath('blank')">Start Blank Quote</button>
-    <button class="primary" onclick="selectPath('configurator')">Truck Configurator Questions</button>
+  <div id="startSelection">
+    <button class="primary" onclick="startBlankQuote()">Start Blank Quote</button>
+    <button class="primary" onclick="startTruckConfigurator()">Truck Configurator Questions</button>
   </div>
 
-  <table id="quoteTable" aria-label="Quote table">
-    <thead>
-      <tr>
-        <th>Description of Work to be Performed</th>
-        <th>Total $</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="quoteBody">
-      <tr draggable="true">
-        <td contenteditable="true" placeholder="Enter description..." spellcheck="false"></td>
-        <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()" placeholder="Enter amount..." spellcheck="false"></td>
-        <td class="actions" aria-label="row actions">
-          <button class="action-btn add" title="Insert row below" onclick="insertRow(this)">+</button>
-          <button class="action-btn delete" title="Delete row" onclick="deleteRow(this)">🗑</button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td style="text-align:right;">Total Amount:</td>
-        <td id="grandTotal">$0.00</td>
-        <td></td>
-      </tr>
-    </tfoot>
-  </table>
-
-  <button class="primary" type="button" onclick="copyQuoteHTML()">📋 Copy Quote to Striven</button>
-  <div id="message">Quote copied — paste it into Striven!</div>
-
-  <!-- Save / Import -->
+  <!-- Save / Import Controls -->
   <div id="saveControls">
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="quoteName" placeholder="Quote name" style="flex:1; padding:8px; display:block;">
@@ -87,6 +186,38 @@ button.primary:hover { background-color:#1d4ed8; }
     </div>
   </div>
 
+  <!-- Quote Table (hidden initially) -->
+  <div id="quoteSection" style="display:none; margin-top:2rem;">
+    <table id="quoteTable" aria-label="Quote table">
+      <thead>
+        <tr>
+          <th>Description of Work to be Performed</th>
+          <th>Total $</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="quoteBody">
+        <tr draggable="true">
+          <td contenteditable="true" placeholder="Enter description..." spellcheck="false"></td>
+          <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()" placeholder="Enter amount..." spellcheck="false"></td>
+          <td class="actions">
+            <button class="action-btn add" title="Insert row below" onclick="insertRow(this)">+</button>
+            <button class="action-btn delete" title="Delete row" onclick="deleteRow(this)">🗑</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td style="text-align:right;">Total Amount:</td>
+          <td id="grandTotal">$0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="primary" type="button" onclick="copyQuoteHTML()">📋 Copy Quote to Striven</button>
+    <div id="message">Quote copied — paste it into Striven!</div>
+  </div>
+
   <!-- Saved Quotes Panel -->
   <div id="savedQuotesPanel">
     <h3>Saved Quotes</h3>
@@ -95,33 +226,28 @@ button.primary:hover { background-color:#1d4ed8; }
 </div>
 
 <script>
-/* ------------------- STATE ------------------- */
-let currentQuoteKey = null;
-
-/* ------------------- Multi-Path ------------------- */
-const configuratorQuestions = [
-  {part: 'PN-001', desc:'Cab Upgrade', price: 1200},
-  {part: 'PN-002', desc:'Extended Chassis', price: 2500},
-  {part: 'PN-003', desc:'LED Lighting Package', price: 450},
-];
-
-function selectPath(path) {
-  const tbody = document.getElementById('quoteBody');
-  tbody.innerHTML = '';
-  if(path==='blank') {
-    tbody.appendChild(createRowElement());
-  } else if(path==='configurator') {
-    configuratorQuestions.forEach(q=>{
-      tbody.appendChild(createRowElement(`${q.part} - ${q.desc}`, q.price));
-    });
-  }
-  updateTotal();
+/* ---------------------------------------------------
+   Multi-Path Logic
+--------------------------------------------------- */
+function startBlankQuote() {
+  document.getElementById('quoteSection').style.display = 'block';
 }
 
-/* ------------------- ROW MANAGEMENT ------------------- */
+function startTruckConfigurator() {
+  alert("Truck Configurator path selected. Implement your configurator questions here.");
+}
+
+/* ---------------------------------------------------
+   State
+--------------------------------------------------- */
+let currentQuoteKey = null;
+
+/* ---------------------------------------------------
+   Row Management
+--------------------------------------------------- */
 function createRowElement(desc = '', amt = '') {
   const newRow = document.createElement('tr');
-  newRow.setAttribute('draggable','true');
+  newRow.setAttribute('draggable', 'true');
   newRow.innerHTML = `
     <td contenteditable="true" spellcheck="false" style="white-space: pre-line;">${desc}</td>
     <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()">${amt}</td>
@@ -134,85 +260,304 @@ function createRowElement(desc = '', amt = '') {
   return newRow;
 }
 
-function insertRow(btn) { const row = btn.closest('tr'); row.parentNode.insertBefore(createRowElement(), row.nextSibling); }
+function insertRow(btn) {
+  const row = btn.closest('tr');
+  row.parentNode.insertBefore(createRowElement(), row.nextSibling);
+}
+
 function deleteRow(btn) {
-  const row = btn.closest('tr'); const tbody = document.getElementById('quoteBody');
-  if(tbody.rows.length>1){row.remove();}else{row.querySelectorAll('td[contenteditable]').forEach(td=>td.innerHTML='');}
+  const row = btn.closest('tr');
+  const tbody = document.getElementById('quoteBody');
+  if (tbody.rows.length > 1) {
+    row.remove();
+  } else {
+    row.querySelectorAll('td[contenteditable]').forEach(td => td.innerHTML = '');
+  }
   updateTotal();
 }
 
-/* ------------------- CURRENCY ------------------- */
-function formatCurrency(cell){ const raw = cell.innerText.replace(/[^0-9.]/g,''); const num = parseFloat(raw);
-cell.innerText = !isNaN(num)? num.toLocaleString('en-US',{style:'currency',currency:'USD'}):''; updateTotal(); }
-function updateTotal(){ let total=0; document.querySelectorAll("#quoteBody tr").forEach(row=>{const amt=parseFloat(row.cells[1].innerText.replace(/[^0-9.-]+/g,''))||0; total+=amt;}); document.getElementById("grandTotal").innerText=total.toLocaleString('en-US',{style:'currency',currency:'USD'}); }
-
-/* ------------------- DRAG & DROP ------------------- */
-let draggingRow=null;
-function addDragEvents(row){ row.addEventListener('dragstart',e=>{draggingRow=e.currentTarget; draggingRow.classList.add('dragging'); try{e.dataTransfer.setData('text/plain','drag');}catch{}});
-row.addEventListener('dragend',e=>{draggingRow.classList.remove('dragging'); draggingRow=null; updateTotal();});
-row.addEventListener('dragover',e=>{ e.preventDefault(); moveDraggingRow(e.clientY);}); }
-function moveDraggingRow(pointerY){ const tbody=document.getElementById('quoteBody'); const rows=[...tbody.querySelectorAll('tr')].filter(r=>r!==draggingRow); let inserted=false; for(let r of rows){const rect=r.getBoundingClientRect(); if(pointerY<rect.top+rect.height/2){tbody.insertBefore(draggingRow,r); inserted=true; break;}} if(!inserted) tbody.appendChild(draggingRow); }
-
-/* ------------------- COPY ------------------- */
-function copyQuoteHTML(){ const rows=document.querySelectorAll('#quoteBody tr'); if(!rows.length) return alert('No rows to copy.');
-let total=0; let html=`<table border="1" cellpadding="5" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:12pt;"><thead><tr><th>Description of Work to be Performed</th><th>Total $</th></tr></thead><tbody>`;
-rows.forEach((row,index)=>{let desc=row.cells[0].innerText.trim().replace(/\n/g,'<br>'); let amt=parseFloat(row.cells[1].innerText.replace(/[^0-9.]/g,''))||0; total+=amt; let bgColor=index%2===1?' bgcolor="#e6f2ff"':''; html+=`<tr${bgColor}><td>${desc}</td><td style="text-align:right">${amt.toLocaleString('en-US',{style:'currency',currency:'USD'})}</td></tr>`;});
-html+=`<tr><td style="text-align:right;font-weight:bold">Total</td><td style="text-align:right;font-weight:bold">${total.toLocaleString('en-US',{style:'currency',currency:'USD'})}</td></tr></tbody></table>`;
-const temp=document.createElement('textarea'); temp.value=html.trim(); document.body.appendChild(temp); temp.select(); document.execCommand('copy'); temp.remove();
-const msg=document.getElementById('message'); msg.style.display='block'; msg.style.opacity='1'; setTimeout(()=>{msg.style.transition='opacity 0.6s ease'; msg.style.opacity='0'; setTimeout(()=>{msg.style.display='none';},600);},1800); }
-
-/* ------------------- IMPORT ------------------- */
-function importQuoteHTML(){ const html=prompt("Paste your HTML quote from Striven:"); if(!html) return;
-const parser=new DOMParser(); const doc=parser.parseFromString(html,"text/html"); const trs=doc.querySelectorAll("tbody tr"); const tbody=document.getElementById("quoteBody"); tbody.innerHTML=""; trs.forEach(tr=>{const desc=tr.cells[0].innerText; const amt=tr.cells[1].innerText; tbody.appendChild(createRowElement(desc,amt));}); updateTotal(); }
-
-/* ------------------- SAVE / LOAD ------------------- */
-function makeTimestamp(){ const now=new Date(); const pad=(n)=>String(n).padStart(2,'0'); return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`; }
-function getAllSaved(){ return JSON.parse(localStorage.getItem('savedQuotes')||'{}'); }
-function setAllSaved(obj){ localStorage.setItem('savedQuotes',JSON.stringify(obj)); }
-
-function saveQuote(){
-  const nameInput=document.getElementById('quoteName'); let baseName=nameInput.value.trim(); if(!baseName) return alert("Please enter a quote name.");
-  const all=getAllSaved();
-  if(currentQuoteKey && currentQuoteKey.startsWith(baseName)){
-    if(!confirm(`Overwrite "${currentQuoteKey}"?`)) return;
-    const ts=makeTimestamp(); const newKey=`${baseName} — ${ts}`;
-    all[newKey]={html:document.getElementById('quoteBody').innerHTML, ts}; delete all[currentQuoteKey]; setAllSaved(all); currentQuoteKey=newKey; loadSavedQuotesList(); alert("Quote updated."); return;
-  }
-  const ts=makeTimestamp(); const key=`${baseName} — ${ts}`;
-  all[key]={html:document.getElementById('quoteBody').innerHTML, ts}; setAllSaved(all); currentQuoteKey=key; loadSavedQuotesList(); alert(`Quote "${key}" saved.`);
+/* ---------------------------------------------------
+   Currency
+--------------------------------------------------- */
+function formatCurrency(cell) {
+  const raw = cell.innerText.replace(/[^0-9.]/g, '');
+  const num = parseFloat(raw);
+  cell.innerText = !isNaN(num)
+    ? num.toLocaleString('en-US', { style:'currency', currency:'USD'})
+    : '';
+  updateTotal();
 }
 
-function toggleSavedQuotesPanel(){ const panel=document.getElementById("savedQuotesPanel"); if(panel.style.display==="block"){panel.style.display="none";}else{loadSavedQuotesList(); panel.style.display="block";} }
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll("#quoteBody tr").forEach(row => {
+    const amt = parseFloat(row.cells[1].innerText.replace(/[^0-9.-]+/g,""));
+    if(!isNaN(amt)) total += amt;
+  });
+  document.getElementById("grandTotal").innerText =
+    total.toLocaleString('en-US', { style:'currency', currency:'USD' });
+}
 
-function loadSavedQuotesList(){
-  const list=document.getElementById('savedQuotesList'); list.innerHTML="";
-  const all=getAllSaved(); const entries=Object.keys(all).sort((a,b)=> new Date(all[b].ts)-new Date(all[a].ts));
+/* ---------------------------------------------------
+   Drag & Drop
+--------------------------------------------------- */
+let draggingRow = null;
+function addDragEvents(row) {
+  row.addEventListener('dragstart', e => {
+    draggingRow = e.currentTarget;
+    draggingRow.classList.add('dragging');
+    try { e.dataTransfer.setData('text/plain','drag'); } catch {}
+  });
+  row.addEventListener('dragend', e => {
+    draggingRow.classList.remove('dragging');
+    draggingRow = null;
+    updateTotal();
+  });
+  row.addEventListener('dragover', e => {
+    e.preventDefault();
+    moveDraggingRow(e.clientY);
+  });
+}
+
+function moveDraggingRow(pointerY) {
+  const tbody = document.getElementById('quoteBody');
+  const rows = [...tbody.querySelectorAll('tr')].filter(r => r !== draggingRow);
+  let inserted = false;
+  for (let r of rows) {
+    const rect = r.getBoundingClientRect();
+    if (pointerY < rect.top + rect.height/2) {
+      tbody.insertBefore(draggingRow, r);
+      inserted = true;
+      break;
+    }
+  }
+  if (!inserted) tbody.appendChild(draggingRow);
+}
+
+document.querySelectorAll('#quoteBody tr').forEach(addDragEvents);
+
+/* ---------------------------------------------------
+   Copy to Striven
+--------------------------------------------------- */
+function copyQuoteHTML() {
+  const rows = document.querySelectorAll('#quoteBody tr');
+  if (!rows.length) return alert('No rows to copy.');
+
+  let total = 0;
+  let html = `<table border="1" cellpadding="5" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:12pt;">
+  <thead><tr>
+    <th>Description of Work to be Performed</th>
+    <th>Total $</th>
+  </tr></thead><tbody>`;
+
+  rows.forEach((row,index)=>{
+    let desc = row.cells[0].innerText.trim().replace(/\n/g,'<br>');
+    let amt = parseFloat(row.cells[1].innerText.replace(/[^0-9.]/g,'')) || 0;
+    total += amt;
+    let bgColor = index%2===1 ? ' bgcolor="#e6f2ff"' : '';
+    html += `<tr${bgColor}><td>${desc}</td><td style="text-align:right">${amt.toLocaleString('en-US',{style:'currency',currency:'USD'})}</td></tr>`;
+  });
+
+  html += `<tr><td style="text-align:right;font-weight:bold">Total</td>
+  <td style="text-align:right;font-weight:bold">${total.toLocaleString('en-US',{style:'currency', currency:'USD'})}</td></tr></tbody></table>`;
+
+  const temp = document.createElement('textarea');
+  temp.value = html.trim();
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand('copy');
+  temp.remove();
+
+  const msg = document.getElementById('message');
+  msg.style.display='block';
+  msg.style.opacity='1';
+  setTimeout(()=>{
+    msg.style.transition='opacity 0.6s ease';
+    msg.style.opacity='0';
+    setTimeout(()=>{msg.style.display='none';},600);
+  },1800);
+}
+
+/* ---------------------------------------------------
+   Import HTML
+--------------------------------------------------- */
+function importQuoteHTML() {
+  const html = prompt("Paste your HTML quote from Striven:");
+  if (!html) return;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const trs = doc.querySelectorAll("tbody tr");
+  const tbody = document.getElementById("quoteBody");
+
+  tbody.innerHTML = "";
+  trs.forEach(tr => {
+    const desc = tr.cells[0].innerText;
+    const amt = tr.cells[1].innerText;
+    tbody.appendChild(createRowElement(desc, amt));
+  });
+
+  updateTotal();
+}
+
+/* ---------------------------------------------------
+   Save / Load / Delete
+--------------------------------------------------- */
+function makeTimestamp() {
+  const now = new Date();
+  const pad = (n)=>String(n).padStart(2,'0');
+  return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+}
+
+function getAllSaved() {
+  return JSON.parse(localStorage.getItem('savedQuotes') || '{}');
+}
+
+function setAllSaved(obj) {
+  localStorage.setItem('savedQuotes', JSON.stringify(obj));
+}
+
+function saveQuote() {
+  const nameInput = document.getElementById('quoteName');
+  let baseName = nameInput.value.trim();
+  if (!baseName) return alert("Please enter a quote name.");
+
+  const all = getAllSaved();
+
+  if (currentQuoteKey && currentQuoteKey.startsWith(baseName)) {
+    if (!confirm(`Overwrite "${currentQuoteKey}"?`)) return;
+
+    const ts = makeTimestamp();
+    const newKey = `${baseName} — ${ts}`;
+    all[newKey] = {
+      html: document.getElementById('quoteBody').innerHTML,
+      ts: ts
+    };
+
+    delete all[currentQuoteKey];
+    setAllSaved(all);
+
+    currentQuoteKey = newKey;
+    loadSavedQuotesList();
+    alert("Quote updated.");
+    return;
+  }
+
+  const ts = makeTimestamp();
+  const key = `${baseName} — ${ts}`;
+  all[key] = { html: document.getElementById('quoteBody').innerHTML, ts };
+  setAllSaved(all);
+
+  currentQuoteKey = key;
+  loadSavedQuotesList();
+  alert(`Quote "${key}" saved.`);
+}
+
+function toggleSavedQuotesPanel() {
+  const panel = document.getElementById("savedQuotesPanel");
+
+  if (panel.style.display === "block") {
+    panel.style.display = "none";
+  } else {
+    loadSavedQuotesList();
+    panel.style.display = "block";
+  }
+}
+
+function loadSavedQuotesList() {
+  const list = document.getElementById('savedQuotesList');
+  list.innerHTML = "";
+
+  const all = getAllSaved();
+  const entries = Object.keys(all).sort((a,b)=> new Date(all[b].ts) - new Date(all[a].ts));
+
   entries.forEach(key=>{
-    const item=all[key]; const row=document.createElement('div'); row.className='saved-item';
-    const name=document.createElement('span'); name.textContent=key; name.style.fontWeight='600'; name.style.cursor='pointer'; name.onclick=()=>loadQuote(key);
-    const meta=document.createElement('span'); meta.className='meta'; meta.textContent=item.ts;
-    const left=document.createElement('div'); left.style.display='flex'; left.style.flexDirection='column'; left.appendChild(name); left.appendChild(meta);
-    const actions=document.createElement('div'); actions.className='row-actions';
-    const loadBtn=document.createElement('button'); loadBtn.textContent='Load'; loadBtn.onclick=()=>loadQuote(key);
-    const delBtn=document.createElement('button'); delBtn.textContent='Delete'; delBtn.onclick=()=>{if(confirm(`Delete "${key}"?`)){deleteSavedQuote(key);}};
-    actions.appendChild(loadBtn); actions.appendChild(delBtn);
-    row.appendChild(left); row.appendChild(actions);
+    const item = all[key];
+    const row = document.createElement('div');
+    row.className = 'saved-item';
+
+    const name = document.createElement('span');
+    name.textContent = key;
+    name.style.fontWeight='600';
+    name.style.cursor='pointer';
+    name.onclick = ()=>loadQuote(key);
+
+    const meta = document.createElement('span');
+    meta.className='meta';
+    meta.textContent=item.ts;
+
+    const left=document.createElement('div');
+    left.style.display='flex';
+    left.style.flexDirection='column';
+    left.appendChild(name);
+    left.appendChild(meta);
+
+    const actions=document.createElement('div');
+    actions.className='row-actions';
+
+    const loadBtn=document.createElement('button');
+    loadBtn.textContent='Load';
+    loadBtn.onclick=()=>loadQuote(key);
+
+    const delBtn=document.createElement('button');
+    delBtn.textContent='Delete';
+    delBtn.onclick=()=>{
+      if(confirm(`Delete "${key}"?`)){
+        deleteSavedQuote(key);
+      }
+    };
+
+    actions.appendChild(loadBtn);
+    actions.appendChild(delBtn);
+
+    row.appendChild(left);
+    row.appendChild(actions);
     list.appendChild(row);
   });
 }
 
-function deleteSavedQuote(key){ const all=getAllSaved(); delete all[key]; setAllSaved(all);
-if(currentQuoteKey===key){currentQuoteKey=null; document.getElementById('quoteName').value="";} loadSavedQuotesList(); }
+function deleteSavedQuote(key){
+  const all = getAllSaved();
+  delete all[key];
+  setAllSaved(all);
 
-function loadQuote(key){ const all=getAllSaved(); const entry=all[key]; if(!entry) return;
-const temp=document.createElement('tbody'); temp.innerHTML=entry.html;
-const tbody=document.getElementById('quoteBody'); tbody.innerHTML="";
-[...temp.querySelectorAll('tr')].forEach(r=>{const desc=r.cells[0].innerText; const amt=r.cells[1].innerText; tbody.appendChild(createRowElement(desc,amt));});
-currentQuoteKey=key;
-const baseName=key.split(" — ")[0]; document.getElementById('quoteName').value=baseName;
-updateTotal(); document.getElementById('savedQuotesPanel').style.display='none'; }
+  if (currentQuoteKey === key) {
+    currentQuoteKey = null;
+    document.getElementById('quoteName').value = "";
+  }
 
-document.addEventListener('DOMContentLoaded',()=>{ loadSavedQuotesList(); selectPath('blank'); });
+  loadSavedQuotesList();
+}
+
+function loadQuote(key) {
+  const all = getAllSaved();
+  const entry = all[key];
+  if (!entry) return;
+
+  const temp = document.createElement('tbody');
+  temp.innerHTML = entry.html;
+
+  const tbody = document.getElementById('quoteBody');
+  tbody.innerHTML="";
+
+  [...temp.querySelectorAll('tr')].forEach(r => {
+    const desc = r.cells[0].innerText;
+    const amt = r.cells[1].innerText;
+    tbody.appendChild(createRowElement(desc, amt));
+  });
+
+  currentQuoteKey = key;
+
+  const baseName = key.split(" — ")[0];
+  document.getElementById('quoteName').value = baseName;
+
+  updateTotal();
+
+  document.getElementById('savedQuotesPanel').style.display='none';
+}
+
+document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
 </script>
+
 </body>
 </html>
