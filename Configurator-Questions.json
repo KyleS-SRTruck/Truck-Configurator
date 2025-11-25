@@ -1,12 +1,10 @@
-[
-  {
+{
   "BibeauBodyOptions": {
     "SimpleYesNo": [
       "Select One",
       "Yes",
       "No"
     ],
-
     "Series": [
       "Select One",
       "BFL",
@@ -14,7 +12,6 @@
       "EL",
       "M"
     ],
-
     "BodyLength": [
       "Select One",
       "14'",
@@ -31,7 +28,6 @@
       "19'6\"",
       "20'"
     ],
-
     "SideHtF": [
       "Select One",
       "66F",
@@ -39,7 +35,6 @@
       "54F",
       "48F"
     ],
-
     "SideHtR": [
       "Select One",
       "66R",
@@ -47,37 +42,31 @@
       "54R",
       "48R"
     ],
-
     "DoghouseDepth": [
       "Select One",
       "Flat Front",
       "12\"",
       "18\""
     ],
-
     "ExtraOvalsRear": [
       "Select One",
       "(1) Set",
       "(2) Sets"
     ],
-
     "DoorSlope": [
       "Select One",
       "Std. 8\"",
       "12\"",
       "Straight"
     ],
-
     "HiLiftTailgate": "SimpleYesNo",
     "CoalDoor": "SimpleYesNo",
     "Twistlocks": "SimpleYesNo",
-
     "LightKit": [
       "Select One",
       "LED Kit",
       "No"
     ],
-
     "FixedValues": {
       "VibratorPlate": "Reinforcement",
       "InsideSteps": "Ship Loose",
@@ -85,213 +74,8 @@
       "TailgateCylinder": "3.25\"",
       "BodyProp": "Std. for BVA"
     },
-
     "FormulaDriven": {
       "Bumper": "Uses DoorSlope rule: Std. 8\" or 12\" → 45°, Straight → Straight"
     }
   }
-},
-
-  {
-    "Simple Yes/No": "Yes",
-    "Chassis Make/Model": "Freightliner 114SD",
-    "Transmission": "Allison Auto",
-    "CT": "120\"",
-    "Drive Split": "51\"",
-    "Body Series": "BFL",
-    "Body Length": "14'",
-    "Side Ht. F": "66F",
-    "Side Ht. R": "66R",
-    "Door Slope": "Std. 8\"",
-    "Tailgate Cylinder": "3.25\"",
-    "Body Prop": "Std. for BVA",
-    "Tarp System": "No",
-    "Tarp Type": "NA",
-    "Coal Door": "No",
-    "Bang Boards": "No",
-    "42\" Center Mudflap": "No",
-    "Heat Kit": "No",
-    "Backup Alarm": "Factory Supplied",
-    "Work/ Rev. Light at Hinge": "No",
-    "Hoist Control": "Std. Detent Down",
-    "Control Tower/Location": "Std. Tower",
-    "Control Orientation": "Front to Back",
-    "Mudflaps, Front of Axle": "No",
-    "Swing Down Mudflaps": "No",
-    "Shovel Holder": "No",
-    "Hitch/Plate": "No",
-    "Add Reciever": "No",
-    "Trailer Plug": "No",
-    "Tow Hook": "NA",
-    "Hook Height": "Flat Front",
-    "Doghouse Depth": "No",
-    "Twistlocks": "No",
-    "2nd Twistlocks": "None",
-    "Asphalt Release Agent Supply Source": "None",
-    "Asphalt Sprayer Discharge Location(s)": "No",
-    "Walkrail": "No",
-    "Gladhands": "No",
-    "Pusher Axle": "No",
-    "Tag Axle": "Factory Installed",
-    "PTO": "Factory Installed",
-    "Pump": "Yes",
-    "Cab Shield": "Ship Loose (1)",
-    "Side Plate": "Rear 7\" Monitor",
-    "Camera": "No",
-    "Shovel": "Std. On Tailgate",
-    "License Plate": "(1) Set",
-    "Extra Ovals in Rear": "Std. 4 STT @ Rear, Midship Turns, 3 Bar w/ Rev.",
-    "DOT Lighting": "LED Kit",
-    "Light Kit": "No",
-    "Strobes @ Bumper": "No",
-    "Strobes @ Grill": "No",
-    "Strobes @ Cab/Mirror": "No",
-    "Strobes @ Cabshield": "No",
-    "Strobes @ Mid Body": "No",
-    "Strobes @ Rear Body": "No",
-    "Strobes @ Hinge": "No",
-    "2nd Ladder": "No",
-    "Inside Box Steps, Front": "Color Match Cab",
-    "Inside Box Steps, Rear": "No",
-    "Ladder Extension": "No",
-    "Paint": "No",
-    "Paint_2": "No",
-    "Bedliner Lower": "Has Factory in Dash",
-    "Bedliner Tailgate Lower": "Has Factory in Dash",
-    "Bedliner Upper": "Has Factory in Dash",
-    "Switch Location PTO": "Has Factory in Dash",
-    "Switch Location Tailgate": "Has Factory in Dash",
-    "Switch Location Highlift": "Reverse Trigger Only",
-    "Switch Location Strobes": "Has Factory in Dash",
-    "Switch Location Heat Kit": "Has Factory in Dash",
-    "Switch Location Work/Rev. Light": "Has Factory in Dash",
-    "Switch Location Asphalt Sprayer": "Has Factory in Dash",
-    "Switch Location Axles": "Has Factory in Dash",
-    "Switch Location Vibrator": "Has Factory in Dash",
-    "Switch Location Box Spray Bar": "Has Factory in Dash",
-    "Switch Location Tarp": "Has Factory in Dash",
-
-    "Bibeau Body Options": {
-      "Series": "Select One",
-      "Length": "Select One",
-      "Side Ht. F": "Select One",
-      "Side Ht. R": "Select One",
-      "Dog House Depth": "Select One",
-      "Bumper": "Straight",
-      "Vibrator Plate": "Reinforcement",
-      "Extra Ovals in Rear": "Select One",
-      "Inside Steps": "Ship Loose",
-      "Door Slope": "Straight",
-      "Hi-Lift Tailgate": "Select One",
-      "Coal Door": "No",
-      "Twistlocks": "No",
-      "Cab Shield": "No",
-      "Side Plate": "Ship Loose (1)",
-      "Install Kit": "",
-      "Tailgate Cylinder": "3.25\"",
-      "Light Kit": "LED Kit",
-      "Body Prop": "Std. for BVA"
-    }
-  },
-  {
-    "Simple Yes/No": "No",
-    "Chassis Make/Model": "International HX",
-    "Transmission": "Mack mDRIVE",
-    "CT": "121\"",
-    "Drive Split": "52\"",
-    "Body Series": "BMT",
-    "Body Length": "14'6\"",
-    "Side Ht. F": "60F",
-    "Side Ht. R": "60R",
-    "Door Slope": "12\"",
-    "Tailgate Cylinder": "",
-    "Body Prop": "Mountain - Straight Arm Underbody Mount",
-    "Tarp System": "Mesh",
-    "Tarp Type": "Yes",
-    "Coal Door": "Std. Black Poly",
-    "Bang Boards": "Std. MS Mounting w/belting",
-    "42\" Center Mudflap": "Std. SS Electric 4\"",
-    "Heat Kit": "S&R Supplied",
-    "Backup Alarm": "(1) Light",
-    "Work/ Rev. Light at Hinge": "Detent Both Ways",
-    "Hoist Control": "Premium S&R",
-    "Control Tower/Location": "Side to Side",
-    "Control Orientation": "Std. Frame Mt. Rubber Flaps",
-    "Mudflaps, Front of Axle": "Std. Swing Down Mudflaps (2)",
-    "Swing Down Mudflaps": "Std. Shovel Holder with Pipe",
-    "Shovel Holder": "Pintle Plate Only",
-    "Hitch/Plate": "Receiver 2\"",
-    "Add Reciever": "Factory supplied",
-    "Trailer Plug": "Factory supplied",
-    "Tow Hook": "16\"",
-    "Hook Height": "12\"",
-    "Doghouse Depth": "Yes",
-    "Twistlocks": "",
-    "2nd Twistlocks": "OEM Tank",
-    "Asphalt Release Agent Supply Source": "Between Drives",
-    "Asphalt Sprayer Discharge Location(s)": "60\" on Dr. Side",
-    "Walkrail": "Gladhands- Bolt on",
-    "Gladhands": "13.5K Watson 34\" Steerable-Standard",
-    "Pusher Axle": "20K Watson AL2200 Non-Steer",
-    "Tag Axle": "PTO 280GDFJPB5RB",
-    "PTO": "Pump SG102, with Auto Trans",
-    "Pump": "Flat Front MS",
-    "Cab Shield": "",
-    "Side Plate": "Long Flat w/ through bolts on Pintle Plate",
-    "Camera": "(2) Sets",
-    "Shovel": "Std. + Bumper Turns",
-    "License Plate": "No",
-    "Extra Ovals in Rear": "(2) 6\" Oval Amber",
-    "DOT Lighting": "Std. (2) Optronics SLL17ACC2B",
-    "Light Kit": "(2) Optronics SLL17ACC2B",
-    "Strobes @ Bumper": "(4) 6\" Oval Amber",
-    "Strobes @ Grill": "(2) 6\" Oval Amber",
-    "Strobes @ Cab/Mirror": "(2) 6\" Oval Amber",
-    "Strobes @ Cabshield": "(1) SLL15ACC2B Optronics",
-    "Strobes @ Mid Body": "Std. 2nd Ladder, Weld on",
-    "Strobes @ Rear Body": "2 Step Rungs",
-    "Strobes @ Hinge": "Std. 1 Step",
-    "2nd Ladder": "S&R Fold Down SS",
-    "Inside Box Steps, Front": "Custom Colors",
-    "Inside Box Steps, Rear": "Single Stage Solid Color w/ Clear added to Final Coat",
-    "Ladder Extension": "Black",
-    "Paint": "Black",
-    "Paint_2": "Black",
-    "Bedliner Lower": "Install Factory Switch in Dash",
-    "Bedliner Tailgate Lower": "Install Factory Switch in Dash",
-    "Bedliner Upper": "Install Factory Switch in Dash",
-    "Switch Location PTO": "Install Factory Switch in Dash",
-    "Switch Location Tailgate": "Install Factory Switch in Dash",
-    "Switch Location Highlift": "Has Factory in Dash & Rev. trigger",
-    "Switch Location Strobes": "Install Factory Switch in Dash",
-    "Switch Location Heat Kit": "Install Factory Switch in Dash",
-    "Switch Location Work/Rev. Light": "Install Factory Switch in Dash",
-    "Switch Location Asphalt Sprayer": "Install Factory Switch in Dash",
-    "Switch Location Axles": "Install Factory Switch in Dash",
-    "Switch Location Vibrator": "Install Factory Switch in Dash",
-    "Switch Location Box Spray Bar": "Install Factory Switch in Dash",
-    "Switch Location Tarp": "Install Factory Switch in Dash",
-
-    "Bibeau Body Options": {
-      "Series": "Select One",
-      "Length": "Select One",
-      "Side Ht. F": "Select One",
-      "Side Ht. R": "Select One",
-      "Dog House Depth": "Select One",
-      "Bumper": "Straight",
-      "Vibrator Plate": "Reinforcement",
-      "Extra Ovals in Rear": "Select One",
-      "Inside Steps": "Ship Loose",
-      "Door Slope": "Straight",
-      "Hi-Lift Tailgate": "Select One",
-      "Coal Door": "No",
-      "Twistlocks": "No",
-      "Cab Shield": "No",
-      "Side Plate": "Ship Loose (1)",
-      "Install Kit": "",
-      "Tailgate Cylinder": "3.25\"",
-      "Light Kit": "LED Kit",
-      "Body Prop": "Std. for BVA"
-    }
-  }
-]
+}
