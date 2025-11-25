@@ -184,10 +184,97 @@ button.primary:hover {
   </div>
 
   <!-- Truck Configurator Questions UI -->
-  <div id="configuratorContainer" class="hidden" style="margin-top:20px;">
-    <h2>Truck Configurator Questions</h2>
-    <div id="questionsArea"></div>
+<div id="configuratorContainer" class="hidden" style="margin-top:20px;">
+  <h2>Body Options</h2>
+  <div id="questionsArea">
+    <!-- Dynamic dropdowns for Bibeau Body Options -->
+    <div class="question-row">
+      <label class="question-label" for="series">Body Series:</label>
+      <select id="series"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="bodyLength">Body Length:</label>
+      <select id="bodyLength"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="sideHtF">Side Ht. F:</label>
+      <select id="sideHtF"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="sideHtR">Side Ht. R:</label>
+      <select id="sideHtR"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="doghouseDepth">Doghouse Depth:</label>
+      <select id="doghouseDepth"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="extraOvalsRear">Extra Ovals in Rear:</label>
+      <select id="extraOvalsRear"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="doorSlope">Door Slope:</label>
+      <select id="doorSlope"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="hiLiftTailgate">Hi-Lift Tailgate:</label>
+      <select id="hiLiftTailgate"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="coalDoor">Coal Door:</label>
+      <select id="coalDoor"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="twistlocks">Twistlocks:</label>
+      <select id="twistlocks"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="lightKit">Light Kit:</label>
+      <select id="lightKit"></select>
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="bumper">Bumper:</label>
+      <input type="text" id="bumper" readonly />
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="vibratorPlate">Vibrator Plate:</label>
+      <input type="text" id="vibratorPlate" readonly />
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="insideSteps">Inside Steps:</label>
+      <input type="text" id="insideSteps" readonly />
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="sidePlate">Side Plate:</label>
+      <input type="text" id="sidePlate" readonly />
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="tailgateCylinder">Tailgate Cylinder:</label>
+      <input type="text" id="tailgateCylinder" readonly />
+    </div>
+
+    <div class="question-row">
+      <label class="question-label" for="bodyProp">Body Prop:</label>
+      <input type="text" id="bodyProp" readonly />
+    </div>
   </div>
+</div>
+
 
   <!-- Save / Import Controls -->
   <div id="saveControls">
@@ -579,17 +666,24 @@ async function loadConfiguratorQuestions() {
             placeholder.selected = true;
             select.appendChild(placeholder);
 
-            // Series has custom dropdown values
-            if(optionKey === "Series") {
-                ["BFL","BMT","EL","M"].forEach(val=>{
-                    const opt = document.createElement("option");
-                    opt.value = val;
-                    opt.textContent = val;
-                    select.appendChild(opt);
-                });
-            } else {
                 // Use JSON data for other options
-                const options = [...new Set(data.map(row => row[optionKey]).filter(v => v !== "" && v != null))];
+                const bibeauData = data[0].BibeauBodyOptions;
+
+let options = [];
+if (typeof bibeauData[optionKey] === "string") {
+    // Points to a named list in BibeauBodyOptions, e.g., "SimpleYesNo"
+    options = bibeauData[bibeauData[optionKey]] || [];
+} else if (Array.isArray(bibeauData[optionKey])) {
+    options = bibeauData[optionKey];
+}
+
+options.forEach(val => {
+    const opt = document.createElement("option");
+    opt.value = val;
+    opt.textContent = val;
+    select.appendChild(opt);
+});
+
                 options.forEach(val=>{
                     const opt = document.createElement("option");
                     opt.value = val;
