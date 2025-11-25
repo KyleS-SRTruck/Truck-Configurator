@@ -60,9 +60,9 @@
       "Straight"
     ],
     "Hi-Lift Tailgate": "SimpleYesNo",
-    "CoalDoor": "SimpleYesNo",
+    "Coal Door": "SimpleYesNo",
     "Twistlocks": "SimpleYesNo",
-    "LightKit": [
+    "Light Kit": [
       "Select One",
       "LED Kit",
       "No"
