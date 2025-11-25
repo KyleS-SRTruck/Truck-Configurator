@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>S&R Truck Quote Builder</title>
+
 <style>
 body {
   font-family: system-ui, sans-serif;
@@ -173,6 +174,7 @@ button.primary:hover {
 }
 </style>
 </head>
+
 <body>
 <div class="container">
   <h1>SR Truck Quote Builder</h1>
@@ -184,97 +186,99 @@ button.primary:hover {
   </div>
 
   <!-- Truck Configurator Questions UI -->
-<div id="configuratorContainer" class="hidden" style="margin-top:20px;">
-  <h2>Body Options</h2>
-  <div id="questionsArea">
-    <!-- Dynamic dropdowns for Bibeau Body Options -->
-    <div class="question-row">
-      <label class="question-label" for="Body Series">Body Series:</label>
-      <select id="Body Series"></select>
-    </div>
+  <div id="configuratorContainer" class="hidden" style="margin-top:20px;">
+    <h2>Body Options</h2>
+    <div id="questionsArea">
 
-    <div class="question-row">
-      <label class="question-label" for="Body Length">Body Length:</label>
-      <select id="Body Length"></select>
-    </div>
+      <!-- These will be auto-populated -->
+      <div class="question-row">
+        <label class="question-label" for="Body-Series">Body Series:</label>
+        <select id="Body-Series"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Side Ht. F">Side Ht. F:</label>
-      <select id="Side Ht. F"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Body-Length">Body Length:</label>
+        <select id="Body-Length"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Side Ht. R">Side Ht. R:</label>
-      <select id="Side Ht. R"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Side-Ht-F">Side Ht. F:</label>
+        <select id="Side-Ht-F"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Doghouse Depth">Doghouse Depth:</label>
-      <select id="Doghouse Depth"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Side-Ht-R">Side Ht. R:</label>
+        <select id="Side-Ht-R"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Extra Ovals in Rear">Extra Ovals in Rear:</label>
-      <select id="Extra Ovals in Rear"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Doghouse-Depth">Doghouse Depth:</label>
+        <select id="Doghouse-Depth"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Door Slope">Door Slope:</label>
-      <select id="Door Slope"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Extra-Ovals-Rear">Extra Ovals in Rear:</label>
+        <select id="Extra-Ovals-Rear"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Hi-Lift Tailgate">Hi-Lift Tailgate:</label>
-      <select id="Hi-Lift Tailgate"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Door-Slope">Door Slope:</label>
+        <select id="Door-Slope"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Coal Door">Coal Door:</label>
-      <select id="Coal Door"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Hi-Lift-Tailgate">Hi-Lift Tailgate:</label>
+        <select id="Hi-Lift-Tailgate"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Twistlocks">Twistlocks:</label>
-      <select id="Twistlocks"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Coal-Door">Coal Door:</label>
+        <select id="Coal-Door"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Light Kit">Light Kit:</label>
-      <select id="Light Kit"></select>
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Twistlocks">Twistlocks:</label>
+        <select id="Twistlocks"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Bumper">Bumper:</label>
-      <input type="text" id="Bumper" readonly />
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Light-Kit">Light Kit:</label>
+        <select id="Light-Kit"></select>
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Vibrator Plate">Vibrator Plate:</label>
-      <input type="text" id="Vibrator Plate" readonly />
-    </div>
+      <!-- FIXED VALUES -->
+      <div class="question-row">
+        <label class="question-label" for="Bumper">Bumper:</label>
+        <input id="Bumper" type="text" readonly />
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Inside Steps">Inside Steps:</label>
-      <input type="text" id="Inside Steps" readonly />
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Vibrator-Plate">Vibrator Plate:</label>
+        <input id="Vibrator-Plate" type="text" readonly />
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Side Plate">Side Plate:</label>
-      <input type="text" id="Side Plate" readonly />
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Inside-Steps">Inside Steps:</label>
+        <input id="Inside-Steps" type="text" readonly />
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Tailgate Cylinder">Tailgate Cylinder:</label>
-      <input type="text" id="Tailgate Cylinder" readonly />
-    </div>
+      <div class="question-row">
+        <label class="question-label" for="Side-Plate">Side Plate:</label>
+        <input id="Side-Plate" type="text" readonly />
+      </div>
 
-    <div class="question-row">
-      <label class="question-label" for="Body Prop">Body Prop:</label>
-      <input type="text" id="Body Prop" readonly />
+      <div class="question-row">
+        <label class="question-label" for="Tailgate-Cylinder">Tailgate Cylinder:</label>
+        <input id="Tailgate-Cylinder" type="text" readonly />
+      </div>
+
+      <div class="question-row">
+        <label class="question-label" for="Body-Prop">Body Prop:</label>
+        <input id="Body-Prop" type="text" readonly />
+      </div>
+
     </div>
   </div>
-</div>
-
 
   <!-- Save / Import Controls -->
   <div id="saveControls">
@@ -282,6 +286,7 @@ button.primary:hover {
       <input type="text" id="quoteName" placeholder="Quote name" style="flex:1; padding:8px; display:block;">
       <button class="primary" type="button" onclick="saveQuote()">💾 Save Quote</button>
     </div>
+
     <div style="display:flex; gap:8px; margin-top:8px;">
       <button class="primary" type="button" onclick="toggleSavedQuotesPanel()">📁 Saved Quotes</button>
       <button class="primary" type="button" onclick="importQuoteHTML()">⬇️ Import HTML Quote</button>
@@ -298,6 +303,7 @@ button.primary:hover {
           <th>Actions</th>
         </tr>
       </thead>
+
       <tbody id="quoteBody">
         <tr draggable="true">
           <td contenteditable="true" placeholder="Enter description..." spellcheck="false"></td>
@@ -308,6 +314,7 @@ button.primary:hover {
           </td>
         </tr>
       </tbody>
+
       <tfoot>
         <tr>
           <td style="text-align:right;">Total Amount:</td>
@@ -316,6 +323,7 @@ button.primary:hover {
         </tr>
       </tfoot>
     </table>
+
     <button class="primary" type="button" onclick="copyQuoteHTML()">📋 Copy Quote to Striven</button>
     <div id="message">Quote copied — paste it into Striven!</div>
   </div>
@@ -328,362 +336,68 @@ button.primary:hover {
 </div>
 
 <script>
-/* ---------------------------
-   Multi-Path Logic
---------------------------- */
+/* MULTI-PATH LOGIC */
 function startBlankQuote() {
   document.getElementById('quoteSection').style.display = 'block';
 }
 
-/* ---------------------------
-   Quote Table Management
---------------------------- */
-function createRowElement(desc = '', amt = '') {
-  const newRow = document.createElement('tr');
-  newRow.setAttribute('draggable', 'true');
-  newRow.innerHTML = `
-    <td contenteditable="true" spellcheck="false" style="white-space: pre-line;">${desc}</td>
-    <td contenteditable="true" onblur="formatCurrency(this)" oninput="updateTotal()">${amt}</td>
-    <td class="actions">
-      <button class="action-btn add" onclick="insertRow(this)">+</button>
-      <button class="action-btn delete" onclick="deleteRow(this)">🗑</button>
-    </td>
-  `;
-  addDragEvents(newRow);
-  return newRow;
-}
-
-function insertRow(btn) {
-  const row = btn.closest('tr');
-  row.parentNode.insertBefore(createRowElement(), row.nextSibling);
-}
-
-function deleteRow(btn) {
-  const row = btn.closest('tr');
-  const tbody = document.getElementById('quoteBody');
-  if (tbody.rows.length > 1) {
-    row.remove();
-  } else {
-    row.querySelectorAll('td[contenteditable]').forEach(td => td.innerHTML = '');
-  }
-  updateTotal();
-}
-
-/* ---------------------------
-   Currency
---------------------------- */
-function formatCurrency(cell) {
-  const raw = cell.innerText.replace(/[^0-9.]/g, '');
-  const num = parseFloat(raw);
-  cell.innerText = !isNaN(num)
-    ? num.toLocaleString('en-US', { style:'currency', currency:'USD'})
-    : '';
-  updateTotal();
-}
-
-function updateTotal() {
-  let total = 0;
-  document.querySelectorAll("#quoteBody tr").forEach(row => {
-    const amt = parseFloat(row.cells[1].innerText.replace(/[^0-9.-]+/g,""));
-    if(!isNaN(amt)) total += amt;
-  });
-  document.getElementById("grandTotal").innerText =
-    total.toLocaleString('en-US', { style:'currency', currency:'USD' });
-}
-
-/* ---------------------------
-   Drag & Drop
---------------------------- */
-let draggingRow = null;
-function addDragEvents(row) {
-  row.addEventListener('dragstart', e => {
-    draggingRow = e.currentTarget;
-    draggingRow.classList.add('dragging');
-    try { e.dataTransfer.setData('text/plain','drag'); } catch {}
-  });
-  row.addEventListener('dragend', e => {
-    draggingRow.classList.remove('dragging');
-    draggingRow = null;
-    updateTotal();
-  });
-  row.addEventListener('dragover', e => {
-    e.preventDefault();
-    moveDraggingRow(e.clientY);
-  });
-}
-
-function moveDraggingRow(pointerY) {
-  const tbody = document.getElementById('quoteBody');
-  const rows = [...tbody.querySelectorAll('tr')].filter(r => r !== draggingRow);
-  let inserted = false;
-  for (let r of rows) {
-    const rect = r.getBoundingClientRect();
-    if (pointerY < rect.top + rect.height/2) {
-      tbody.insertBefore(draggingRow, r);
-      inserted = true;
-      break;
-    }
-  }
-  if (!inserted) tbody.appendChild(draggingRow);
-}
-
-document.querySelectorAll('#quoteBody tr').forEach(addDragEvents);
-
-/* ---------------------------
-   Copy to Striven
---------------------------- */
-function copyQuoteHTML() {
-  const rows = document.querySelectorAll('#quoteBody tr');
-  if (!rows.length) return alert('No rows to copy.');
-  let total = 0;
-  let html = `<table border="1" cellpadding="5" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:12pt;">
-  <thead><tr>
-    <th>Description of Work to be Performed</th>
-    <th>Total $</th>
-  </tr></thead><tbody>`;
-  rows.forEach((row,index)=>{
-    let desc = row.cells[0].innerText.trim().replace(/\n/g,'<br>');
-    let amt = parseFloat(row.cells[1].innerText.replace(/[^0-9.]/g,'')) || 0;
-    total += amt;
-    let bgColor = index%2===1 ? ' bgcolor="#e6f2ff"' : '';
-    html += `<tr${bgColor}><td>${desc}</td><td style="text-align:right">${amt.toLocaleString('en-US',{style:'currency',currency:'USD'})}</td></tr>`;
-  });
-  html += `<tr><td style="text-align:right;font-weight:bold">Total</td>
-  <td style="text-align:right;font-weight:bold">${total.toLocaleString('en-US',{style:'currency', currency:'USD'})}</td></tr></tbody></table>`;
-  const temp = document.createElement('textarea');
-  temp.value = html.trim();
-  document.body.appendChild(temp);
-  temp.select();
-  document.execCommand('copy');
-  temp.remove();
-  const msg = document.getElementById('message');
-  msg.style.display='block';
-  msg.style.opacity='1';
-  setTimeout(()=>{
-    msg.style.transition='opacity 0.6s ease';
-    msg.style.opacity='0';
-    setTimeout(()=>{msg.style.display='none';},600);
-  },1800);
-}
-
-/* ---------------------------
-   Import HTML
---------------------------- */
-function importQuoteHTML() {
-  const html = prompt("Paste your HTML quote from Striven:");
-  if (!html) return;
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const trs = doc.querySelectorAll("tbody tr");
-  const tbody = document.getElementById("quoteBody");
-  tbody.innerHTML = "";
-  trs.forEach(tr => {
-    const desc = tr.cells[0].innerText;
-    const amt = tr.cells[1].innerText;
-    tbody.appendChild(createRowElement(desc, amt));
-  });
-  updateTotal();
-}
-
-/* ---------------------------
-   Save / Load / Delete
---------------------------- */
-let currentQuoteKey = null;
-function makeTimestamp() {
-  const now = new Date();
-  const pad = (n)=>String(n).padStart(2,'0');
-  return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-}
-function getAllSaved() { return JSON.parse(localStorage.getItem('savedQuotes') || '{}'); }
-function setAllSaved(obj) { localStorage.setItem('savedQuotes', JSON.stringify(obj)); }
-function saveQuote() {
-  const nameInput = document.getElementById('quoteName');
-  let baseName = nameInput.value.trim();
-  if (!baseName) return alert("Please enter a quote name.");
-  const all = getAllSaved();
-  if (currentQuoteKey && currentQuoteKey.startsWith(baseName)) {
-    if (!confirm(`Overwrite "${currentQuoteKey}"?`)) return;
-    const ts = makeTimestamp();
-    const newKey = `${baseName} — ${ts}`;
-    all[newKey] = { html: document.getElementById('quoteBody').innerHTML, ts: ts };
-    delete all[currentQuoteKey];
-    setAllSaved(all);
-    currentQuoteKey = newKey;
-    loadSavedQuotesList();
-    alert("Quote updated.");
-    return;
-  }
-  const ts = makeTimestamp();
-  const key = `${baseName} — ${ts}`;
-  all[key] = { html: document.getElementById('quoteBody').innerHTML, ts };
-  setAllSaved(all);
-  currentQuoteKey = key;
-  loadSavedQuotesList();
-  alert(`Quote "${key}" saved.`);
-}
-
-function toggleSavedQuotesPanel() {
-  const panel = document.getElementById("savedQuotesPanel");
-  if (panel.style.display === "block") {
-    panel.style.display = "none";
-  } else {
-    loadSavedQuotesList();
-    panel.style.display = "block";
-  }
-}
-
-function loadSavedQuotesList() {
-  const list = document.getElementById('savedQuotesList');
-  list.innerHTML = "";
-  const all = getAllSaved();
-  const entries = Object.keys(all).sort((a,b)=> new Date(all[b].ts) - new Date(all[a].ts));
-  entries.forEach(key=>{
-    const item = all[key];
-    const row = document.createElement('div');
-    row.className = 'saved-item';
-    const name = document.createElement('span');
-    name.textContent = key;
-    name.style.fontWeight='600';
-    name.style.cursor='pointer';
-    name.onclick = ()=>loadQuote(key);
-    const meta = document.createElement('span');
-    meta.className='meta';
-    meta.textContent=item.ts;
-    const left=document.createElement('div');
-    left.style.display='flex';
-    left.style.flexDirection='column';
-    left.appendChild(name);
-    left.appendChild(meta);
-    const actions=document.createElement('div');
-    actions.className='row-actions';
-    const loadBtn=document.createElement('button');
-    loadBtn.textContent='Load';
-    loadBtn.onclick=()=>loadQuote(key);
-    const delBtn=document.createElement('button');
-    delBtn.textContent='Delete';
-    delBtn.onclick=()=>{
-      if(confirm(`Delete "${key}"?`)){
-        deleteSavedQuote(key);
-      }
-    };
-    actions.appendChild(loadBtn);
-    actions.appendChild(delBtn);
-    row.appendChild(left);
-    row.appendChild(actions);
-    list.appendChild(row);
-  });
-}
-
-function deleteSavedQuote(key){
-  const all = getAllSaved();
-  delete all[key];
-  setAllSaved(all);
-  if (currentQuoteKey === key) {
-    currentQuoteKey = null;
-    document.getElementById('quoteName').value = "";
-  }
-  loadSavedQuotesList();
-}
-
-function loadQuote(key) {
-  const all = getAllSaved();
-  const entry = all[key];
-  if (!entry) return;
-  const temp = document.createElement('tbody');
-  temp.innerHTML = entry.html;
-  const tbody = document.getElementById('quoteBody');
-  tbody.innerHTML="";
-  [...temp.querySelectorAll('tr')].forEach(r => {
-    const desc = r.cells[0].innerText;
-    const amt = r.cells[1].innerText;
-    tbody.appendChild(createRowElement(desc, amt));
-  });
-  currentQuoteKey = key;
-  const baseName = key.split(" — ")[0];
-  document.getElementById('quoteName').value = baseName;
-  updateTotal();
-  document.getElementById('savedQuotesPanel').style.display='none';
-}
-
-document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
-
-/* ---------------------------
-   Configurator Questions
---------------------------- */
+/* CONFIGURATOR QUESTIONS */
 async function loadConfiguratorQuestions() {
     const url = "Configurator-Questions.json";
+
     try {
         const response = await fetch(url);
         const data = await response.json();
 
         const b = data[0].BibeauBodyOptions;
 
-        // This time, DO NOT delete the existing HTML.
-        // We populate directly into your existing <select> and <input> fields.
-
         const fieldMap = {
-            "Body Series": b.Series,
-            "Body Length": b.BodyLength,
-            "Side Ht. F": b.SideHtF,
-            "Side Ht. R": b.SideHtR,
-            "Doghouse Depth": b.DoghouseDepth,
-            "Extra Ovals in Rear": b.ExtraOvalsRear,
-            "Door Slope": b.DoorSlope,
-            "Hi-Lift Tailgate": b[b.HiLiftTailgate],
-            "Coal Door": b[b.CoalDoor],
+            "Body-Series": b.Series,
+            "Body-Length": b.BodyLength,
+            "Side-Ht-F": b.SideHtF,
+            "Side-Ht-R": b.SideHtR,
+            "Doghouse-Depth": b.DoghouseDepth,
+            "Extra-Ovals-Rear": b.ExtraOvalsRear,
+            "Door-Slope": b.DoorSlope,
+            "Hi-Lift-Tailgate": b[b.HiLiftTailgate],
+            "Coal-Door": b[b.CoalDoor],
             "Twistlocks": b[b.Twistlocks],
-            "Light Kit": b.LightKit,
+            "Light-Kit": b.LightKit,
 
-            // fixed-value fields
             "Bumper": b.FormulaDriven.Bumper,
-            "Vibrator Plate": b.FixedValues.VibratorPlate,
-            "Inside Steps": b.FixedValues.InsideSteps,
-            "Side Plate": b.FixedValues.SidePlate,
-            "Tailgate Cylinder": b.FixedValues.TailgateCylinder,
-            "Body Prop": b.FixedValues.BodyProp
+            "Vibrator-Plate": b.FixedValues.VibratorPlate,
+            "Inside-Steps": b.FixedValues.InsideSteps,
+            "Side-Plate": b.FixedValues.SidePlate,
+            "Tailgate-Cylinder": b.FixedValues.TailgateCylinder,
+            "Body-Prop": b.FixedValues.BodyProp
         };
 
-        // Populate into existing HTML fields
-        Object.entries(fieldMap).forEach(([label, value]) => {
-            const el = document.getElementById(label);
+        for (let id in fieldMap) {
+            const value = fieldMap[id];
+            const element = document.getElementById(id);
 
-            if (!el) {
-                console.warn("Missing element in HTML:", label);
-                return;
-            }
+            if (!element) continue;
 
-            // Dropdown
             if (Array.isArray(value)) {
-                el.innerHTML = ""; // Clear existing
-
-                const placeholder = document.createElement("option");
-                placeholder.textContent = "-- Select Option --";
-                placeholder.disabled = true;
-                placeholder.selected = true;
-                placeholder.value = "";
-                el.appendChild(placeholder);
-
+                element.innerHTML = "";
                 value.forEach(v => {
                     const opt = document.createElement("option");
                     opt.value = v;
                     opt.textContent = v;
-                    el.appendChild(opt);
+                    element.appendChild(opt);
                 });
+            } else {
+                element.value = value;
             }
-            // Readonly field
-            else {
-                el.value = value;
-            }
-        });
+        }
 
         document.getElementById("configuratorContainer").classList.remove("hidden");
 
     } catch (err) {
         console.error("Error loading configurator data:", err);
-        alert("Could not load configurator questions.");
+        alert("Failed to load configurator data.");
     }
 }
-
 </script>
 
 </body>
