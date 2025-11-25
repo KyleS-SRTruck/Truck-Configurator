@@ -612,16 +612,15 @@ document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
 --------------------------- */
 async function loadConfiguratorQuestions() {
     const url = "Configurator-Questions.json";
-
     try {
         const response = await fetch(url);
         const data = await response.json();
 
         const b = data[0].BibeauBodyOptions;
-        const questionsArea = document.getElementById("questionsArea");
-        questionsArea.innerHTML = ""; // Clear existing items
 
-        // Mapping from HTML labels → JSON keys
+        // This time, DO NOT delete the existing HTML.
+        // We populate directly into your existing <select> and <input> fields.
+
         const fieldMap = {
             "Body Series": b.Series,
             "Body Length": b.BodyLength,
@@ -630,12 +629,12 @@ async function loadConfiguratorQuestions() {
             "Doghouse Depth": b.DoghouseDepth,
             "Extra Ovals in Rear": b.ExtraOvalsRear,
             "Door Slope": b.DoorSlope,
-            "Hi-Lift Tailgate": b[b.HiLiftTailgate], // SimpleYesNo
-            "Coal Door": b[b.CoalDoor],             // SimpleYesNo
-            "Twistlocks": b[b.Twistlocks],          // SimpleYesNo
+            "Hi-Lift Tailgate": b[b.HiLiftTailgate],
+            "Coal Door": b[b.CoalDoor],
+            "Twistlocks": b[b.Twistlocks],
             "Light Kit": b.LightKit,
 
-            // FIXED VALUES → go into readonly fields
+            // fixed-value fields
             "Bumper": b.FormulaDriven.Bumper,
             "Vibrator Plate": b.FixedValues.VibratorPlate,
             "Inside Steps": b.FixedValues.InsideSteps,
@@ -644,56 +643,47 @@ async function loadConfiguratorQuestions() {
             "Body Prop": b.FixedValues.BodyProp
         };
 
-        // Loop over each HTML field label
-        Object.entries(fieldMap).forEach(([labelText, value]) => {
-            const row = document.createElement("div");
-            row.className = "question-row";
+        // Populate into existing HTML fields
+        Object.entries(fieldMap).forEach(([label, value]) => {
+            const el = document.getElementById(label);
 
-            const label = document.createElement("label");
-            label.className = "question-label";
-            label.textContent = labelText + ":";
+            if (!el) {
+                console.warn("Missing element in HTML:", label);
+                return;
+            }
 
-            row.appendChild(label);
-
-            // Dropdown field
+            // Dropdown
             if (Array.isArray(value)) {
-                const select = document.createElement("select");
+                el.innerHTML = ""; // Clear existing
 
                 const placeholder = document.createElement("option");
                 placeholder.textContent = "-- Select Option --";
                 placeholder.disabled = true;
                 placeholder.selected = true;
                 placeholder.value = "";
-                select.appendChild(placeholder);
+                el.appendChild(placeholder);
 
                 value.forEach(v => {
                     const opt = document.createElement("option");
                     opt.value = v;
                     opt.textContent = v;
-                    select.appendChild(opt);
+                    el.appendChild(opt);
                 });
-
-                row.appendChild(select);
             }
-            // Read-only field
+            // Readonly field
             else {
-                const input = document.createElement("input");
-                input.type = "text";
-                input.value = value;
-                input.readOnly = true;
-                row.appendChild(input);
+                el.value = value;
             }
-
-            questionsArea.appendChild(row);
         });
 
         document.getElementById("configuratorContainer").classList.remove("hidden");
 
     } catch (err) {
         console.error("Error loading configurator data:", err);
-        alert("Failed to load configurator data.");
+        alert("Could not load configurator questions.");
     }
 }
+
 </script>
 
 </body>
