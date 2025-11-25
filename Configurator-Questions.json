@@ -1,83 +1,83 @@
-[
-{
-  "BibeauBodyOptions": {
-    "SimpleYesNo": [
-      "Select One",
-      "Yes",
-      "No"
-    ],
-    "Body Series": [
-      "Select One",
-      "BFL",
-      "BMT",
-      "EL",
-      "M"
-    ],
-    "Body Length": [
-      "Select One",
-      "14'",
-      "14'6\"",
-      "15'",
-      "15'6\"",
-      "16'",
-      "16'6\"",
-      "17'",
-      "17'6\"",
-      "18'",
-      "18'6\"",
-      "19'",
-      "19'6\"",
-      "20'"
-    ],
-    "Side Ht. F": [
-      "Select One",
-      "66F",
-      "60F",
-      "54F",
-      "48F"
-    ],
-    "Side Ht. R": [
-      "Select One",
-      "66R",
-      "60R",
-      "54R",
-      "48R"
-    ],
-    "Doghouse Depth": [
-      "Select One",
-      "Flat Front",
-      "12\"",
-      "18\""
-    ],
-    "Extra Ovals in Rear": [
-      "Select One",
-      "(1) Set",
-      "(2) Sets"
-    ],
-    "Door Slope": [
-      "Select One",
-      "Std. 8\"",
-      "12\"",
-      "Straight"
-    ],
-    "Hi-Lift Tailgate": "SimpleYesNo",
-    "Coal Door": "SimpleYesNo",
-    "Twistlocks": "SimpleYesNo",
-    "Light Kit": [
-      "Select One",
-      "LED Kit",
-      "No"
-    ],
-    "FixedValues": {
-      "Vibrator Plate": "Reinforcement",
-      "Inside Steps": "Ship Loose",
-      "Side Plate": "Ship Loose (1)",
-      "Tailgate Cylinder": "3.25\"",
-      "Body Prop": "Std. for BVA"
-    },
-    "FormulaDriven": {
-      "Bumper": "Uses DoorSlope rule: Std. 8\" or 12\" → 45°, Straight → Straight"
-    }
-  }
-}
+[  
+  {  
+    "BibeauBodyOptions": {  
+      "SimpleYesNo": [  
+        "Select One",  
+        "Yes",  
+        "No"  
+      ],  
+      "Series": [  
+        "Select One",  
+        "BFL",  
+        "BMT",  
+        "EL",  
+        "M"  
+      ],  
+      "BodyLength": [  
+        "Select One",  
+        "14'",  
+        "14'6\"",  
+        "15'",  
+        "15'6\"",  
+        "16'",  
+        "16'6\"",  
+        "17'",  
+        "17'6\"",  
+        "18'",  
+        "18'6\"",  
+        "19'",  
+        "19'6\"",  
+        "20'"  
+      ],  
+      "SideHtF": [  
+        "Select One",  
+        "66F",  
+        "60F",  
+        "54F",  
+        "48F"  
+      ],  
+      "SideHtR": [  
+        "Select One",  
+        "66R",  
+        "60R",  
+        "54R",  
+        "48R"  
+      ],  
+      "DoghouseDepth": [  
+        "Select One",  
+        "Flat Front",  
+        "12\"",  
+        "18\""  
+      ],  
+      "ExtraOvalsRear": [  
+        "Select One",  
+        "(1) Set",  
+        "(2) Sets"  
+      ],  
+      "DoorSlope": [  
+        "Select One",  
+        "Std. 8\"",  
+        "12\"",  
+        "Straight"  
+      ],  
+      "HiLiftTailgate": "SimpleYesNo",  
+      "CoalDoor": "SimpleYesNo",  
+      "Twistlocks": "SimpleYesNo",  
+      "LightKit": [  
+        "Select One",  
+        "LED Kit",  
+        "No"  
+      ],  
+      "FixedValues": {  
+        "VibratorPlate": "Reinforcement",  
+        "InsideSteps": "Ship Loose",  
+        "SidePlate": "Ship Loose (1)",  
+        "TailgateCylinder": "3.25\"",  
+        "BodyProp": "Std. for BVA"  
+      },  
+      "FormulaDriven": {  
+        "Bumper": "Std. 8\\\" or 12\\\" → 45°, Straight → Straight"  
+      }  
+    }  
+  }  
 ]
