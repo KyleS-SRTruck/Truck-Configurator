@@ -611,78 +611,80 @@ document.addEventListener('DOMContentLoaded', loadSavedQuotesList);
    Configurator Questions
 --------------------------- */
 async function loadConfiguratorQuestions() {
-    // URL to your JSON file
     const url = "Configurator-Questions.json";
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
+        const b = data[0].BibeauBodyOptions;
         const questionsArea = document.getElementById("questionsArea");
-        questionsArea.innerHTML = ""; // Clear previous content
+        questionsArea.innerHTML = ""; // Clear existing items
 
-        // Only show Bibeau Body Options
-        const bibeauOptions = [
-            "Body Series",
-            "Body Length",
-            "Side Ht. F",
-            "Side Ht. R",
-            "Doghouse Depth",
-            "Bumper",
-            "Vibrator Plate",
-            "Extra Ovals in Rear",
-            "Inside Steps",
-            "Door Slope",
-            "Hi-Lift Tailgate",
-            "Coal Door",
-            "Twistlocks",
-            "Cab Shield",
-            "Side Plate",
-            "Install Kit",
-            "Tailgate Cylinder",
-            "Light Kit",
-            "Body Prop"
-        ];
+        // Mapping from HTML labels → JSON keys
+        const fieldMap = {
+            "Body Series": b.Series,
+            "Body Length": b.BodyLength,
+            "Side Ht. F": b.SideHtF,
+            "Side Ht. R": b.SideHtR,
+            "Doghouse Depth": b.DoghouseDepth,
+            "Extra Ovals in Rear": b.ExtraOvalsRear,
+            "Door Slope": b.DoorSlope,
+            "Hi-Lift Tailgate": b[b.HiLiftTailgate], // SimpleYesNo
+            "Coal Door": b[b.CoalDoor],             // SimpleYesNo
+            "Twistlocks": b[b.Twistlocks],          // SimpleYesNo
+            "Light Kit": b.LightKit,
 
-        // Loop through each option
-        bibeauOptions.forEach(optionKey => {
-    const rowDiv = document.createElement("div");
-    rowDiv.className = "question-row";
+            // FIXED VALUES → go into readonly fields
+            "Bumper": b.FormulaDriven.Bumper,
+            "Vibrator Plate": b.FixedValues.VibratorPlate,
+            "Inside Steps": b.FixedValues.InsideSteps,
+            "Side Plate": b.FixedValues.SidePlate,
+            "Tailgate Cylinder": b.FixedValues.TailgateCylinder,
+            "Body Prop": b.FixedValues.BodyProp
+        };
 
-    const label = document.createElement("label");
-    label.textContent = optionKey.replace(/([A-Z])/g, ' $1').trim() + ": ";
-    label.className = "question-label";
+        // Loop over each HTML field label
+        Object.entries(fieldMap).forEach(([labelText, value]) => {
+            const row = document.createElement("div");
+            row.className = "question-row";
 
-    const select = document.createElement("select");
-    select.name = optionKey;
+            const label = document.createElement("label");
+            label.className = "question-label";
+            label.textContent = labelText + ":";
 
-    // Placeholder
-    const placeholder = document.createElement("option");
-    placeholder.value = "";
-    placeholder.textContent = "-- Select Option --";
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    select.appendChild(placeholder);
+            row.appendChild(label);
 
-    const bibeauData = data[0].BibeauBodyOptions;
-    let options = Array.isArray(bibeauData[optionKey]) ? bibeauData[optionKey] : [];
-    
-    options.forEach(val => {
-        const opt = document.createElement("option");
-        opt.value = val;
-        opt.textContent = val;
-        select.appendChild(opt);
-    });
+            // Dropdown field
+            if (Array.isArray(value)) {
+                const select = document.createElement("select");
 
-    rowDiv.appendChild(label);
-    rowDiv.appendChild(select);
-    questionsArea.appendChild(rowDiv);
-});
+                const placeholder = document.createElement("option");
+                placeholder.textContent = "-- Select Option --";
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                placeholder.value = "";
+                select.appendChild(placeholder);
+
+                value.forEach(v => {
+                    const opt = document.createElement("option");
+                    opt.value = v;
+                    opt.textContent = v;
+                    select.appendChild(opt);
+                });
+
+                row.appendChild(select);
+            }
+            // Read-only field
+            else {
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = value;
+                input.readOnly = true;
+                row.appendChild(input);
             }
 
-            rowDiv.appendChild(label);
-            rowDiv.appendChild(select);
-            questionsArea.appendChild(rowDiv);
+            questionsArea.appendChild(row);
         });
 
         document.getElementById("configuratorContainer").classList.remove("hidden");
