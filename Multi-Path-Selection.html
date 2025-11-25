@@ -624,10 +624,10 @@ async function loadConfiguratorQuestions() {
         // Only show Bibeau Body Options
         const bibeauOptions = [
             "Series",
-            "Length",
+            "Body Length",
             "Side Ht. F",
             "Side Ht. R",
-            "Dog House Depth",
+            "Doghouse Depth",
             "Bumper",
             "Vibrator Plate",
             "Extra Ovals in Rear",
@@ -646,50 +646,38 @@ async function loadConfiguratorQuestions() {
 
         // Loop through each option
         bibeauOptions.forEach(optionKey => {
-            const rowDiv = document.createElement("div");
-            rowDiv.className = "question-row";
-            rowDiv.style.marginBottom = "12px";
+    const rowDiv = document.createElement("div");
+    rowDiv.className = "question-row";
 
-            const label = document.createElement("label");
-            label.textContent = optionKey + ": ";
-            label.style.display = "inline-block";
-            label.style.width = "260px";
+    const label = document.createElement("label");
+    label.textContent = optionKey.replace(/([A-Z])/g, ' $1').trim() + ": ";
+    label.className = "question-label";
 
-            const select = document.createElement("select");
-            select.name = optionKey;
+    const select = document.createElement("select");
+    select.name = optionKey;
 
-            // Placeholder
-            const placeholder = document.createElement("option");
-            placeholder.value = "";
-            placeholder.textContent = "-- Select Option --";
-            placeholder.disabled = true;
-            placeholder.selected = true;
-            select.appendChild(placeholder);
+    // Placeholder
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "-- Select Option --";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    select.appendChild(placeholder);
 
-                // Use JSON data for other options
-                const bibeauData = data[0].BibeauBodyOptions;
+    const bibeauData = data[0].BibeauBodyOptions;
+    let options = Array.isArray(bibeauData[optionKey]) ? bibeauData[optionKey] : [];
+    
+    options.forEach(val => {
+        const opt = document.createElement("option");
+        opt.value = val;
+        opt.textContent = val;
+        select.appendChild(opt);
+    });
 
-let options = [];
-if (typeof bibeauData[optionKey] === "string") {
-    // Points to a named list in BibeauBodyOptions, e.g., "SimpleYesNo"
-    options = bibeauData[bibeauData[optionKey]] || [];
-} else if (Array.isArray(bibeauData[optionKey])) {
-    options = bibeauData[optionKey];
-}
-
-options.forEach(val => {
-    const opt = document.createElement("option");
-    opt.value = val;
-    opt.textContent = val;
-    select.appendChild(opt);
+    rowDiv.appendChild(label);
+    rowDiv.appendChild(select);
+    questionsArea.appendChild(rowDiv);
 });
-
-                options.forEach(val=>{
-                    const opt = document.createElement("option");
-                    opt.value = val;
-                    opt.textContent = val;
-                    select.appendChild(opt);
-                });
             }
 
             rowDiv.appendChild(label);
