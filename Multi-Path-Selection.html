@@ -486,20 +486,6 @@ async function loadConfiguratorQuestions() {
         alert("Failed to load configurator data.");
     }
 }
-
-// Initialize on load
-updateBumper();
-
-// Update Bumper whenever Door Slope changes
-doorSlopeSelect.addEventListener('change', updateBumper);
-
-        document.getElementById("configuratorContainer").classList.remove("hidden");
-
-    } catch (err) {
-        console.error("Error loading configurator data:", err);
-        alert("Failed to load configurator data.");
-    }
-}
 </script>
 
 </body>
