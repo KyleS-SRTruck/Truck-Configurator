@@ -271,6 +271,16 @@ button.primary:hover {
         <label class="question-label" for="Body-Prop">Body Prop:</label>
         <input id="Body-Prop" type="text" readonly />
       </div>
+<!-- NEXT BUTTON -->
+<div id="bodyOptionsActions" style="margin-top: 20px; text-align: center;">
+  <button id="nextToNextSection" class="primary" disabled>Next</button>
+</div>
+<!-- NEXT SECTION (initially hidden) -->
+<div id="nextSectionContainer" class="hidden" style="margin-top: 20px;">
+  <h2>Next Section</h2>
+  <p>Put your next dropdowns or options here.</p>
+  <button id="backToBodyOptions" class="primary">Back to Body Options</button>
+</div>
 
     </div>
   </div>
@@ -408,6 +418,55 @@ function updateBumper() {
         bumperInput.value = '';
     }
 }
+      // BODY OPTIONS NAVIGATION LOGIC
+
+// List of Body Option select IDs
+const bodyOptionSelects = [
+  "Body-Series",
+  "Body-Length",
+  "Side-Ht-F",
+  "Side-Ht-R",
+  "Doghouse-Depth",
+  "Extra-Ovals-Rear",
+  "Door-Slope",
+  "Hi-Lift-Tailgate",
+  "Coal-Door",
+  "Twistlocks",
+  "Light-Kit"
+].map(id => document.getElementById(id));
+
+const nextButton = document.getElementById("nextToNextSection");
+const backButton = document.getElementById("backToBodyOptions");
+const bodyOptionsContainer = document.getElementById("configuratorContainer");
+const nextSectionContainer = document.getElementById("nextSectionContainer");
+
+// Check if all selections are made
+function checkBodyOptionsComplete() {
+  const allSelected = bodyOptionSelects.every(sel => sel.value && sel.value !== "Select One");
+  nextButton.disabled = !allSelected;
+}
+
+// Attach change event to all Body Option selects
+bodyOptionSelects.forEach(sel => {
+  sel.addEventListener("change", () => {
+    checkBodyOptionsComplete();
+    // Optional: update formula-driven fields if any
+    updateBumper();
+  });
+});
+
+// Next button click
+nextButton.addEventListener("click", () => {
+  bodyOptionsContainer.classList.add("hidden");
+  nextSectionContainer.classList.remove("hidden");
+});
+
+// Back button click
+backButton.addEventListener("click", () => {
+  nextSectionContainer.classList.add("hidden");
+  bodyOptionsContainer.classList.remove("hidden");
+});
+
 
 // Initialize on load
 updateBumper();
