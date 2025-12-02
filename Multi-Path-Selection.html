@@ -394,6 +394,26 @@ async function loadConfiguratorQuestions() {
                 element.value = value;
             }
         }
+// Door Slope → Bumper dynamic formula
+const doorSlopeSelect = document.getElementById("Door-Slope");
+const bumperInput = document.getElementById("Bumper");
+
+function updateBumper() {
+    const val = doorSlopeSelect.value;
+    if (val === 'Std. 8"' || val === '12"') {
+        bumperInput.value = '45°';
+    } else if (val === 'Straight') {
+        bumperInput.value = 'Straight';
+    } else {
+        bumperInput.value = '';
+    }
+}
+
+// Initialize on load
+updateBumper();
+
+// Update Bumper whenever Door Slope changes
+doorSlopeSelect.addEventListener('change', updateBumper);
 
         document.getElementById("configuratorContainer").classList.remove("hidden");
 
