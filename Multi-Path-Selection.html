@@ -350,15 +350,20 @@ function startBlankQuote() {
 async function loadConfiguratorQuestions() {
     const container = document.getElementById("configuratorContainer");
 
-    // ⬇️ TOGGLE BEHAVIOR
+    // If container is already visible, just hide it (do NOT reload JSON)
     if (!container.classList.contains("hidden")) {
         container.classList.add("hidden");
-        return; // stop here — do NOT reload JSON
+        return;
     }
 
-    // ⬇️ If hidden, continue loading JSON and display it
-    const url = "Configurator-Questions.json";
+    // If already loaded once, just show it
+    if (container.dataset.loaded === "true") {
+        container.classList.remove("hidden");
+        return;
+    }
 
+    // Fetch JSON only once
+    const url = "Configurator-Questions.json";
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -389,21 +394,34 @@ async function loadConfiguratorQuestions() {
         for (let id in fieldMap) {
             const value = fieldMap[id];
             const element = document.getElementById(id);
-
             if (!element) continue;
 
             if (Array.isArray(value)) {
-                element.innerHTML = "";
-                value.forEach(v => {
-                    const opt = document.createElement("option");
-                    opt.value = v;
-                    opt.textContent = v;
-                    element.appendChild(opt);
-                });
+                // Only populate if select is empty to avoid overwriting user choices
+                if (element.options.length <= 1) {
+                    element.innerHTML = "";
+                    value.forEach(v => {
+                        const opt = document.createElement("option");
+                        opt.value = v;
+                        opt.textContent = v;
+                        element.appendChild(opt);
+                    });
+                }
             } else {
-                element.value = value;
+                // Only set value if it is empty
+                if (!element.value) element.value = value;
             }
         }
+
+        // Mark as loaded so we don't reload JSON again
+        container.dataset.loaded = "true";
+        container.classList.remove("hidden");
+
+    } catch (err) {
+        console.error("Error loading configurator data:", err);
+        alert("Failed to load configurator data.");
+    }
+}
 // Door Slope → Bumper dynamic formula
 const doorSlopeSelect = document.getElementById("Door-Slope");
 const bumperInput = document.getElementById("Bumper");
