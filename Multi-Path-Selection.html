@@ -346,6 +346,15 @@ function startBlankQuote() {
 
 /* CONFIGURATOR QUESTIONS */
 async function loadConfiguratorQuestions() {
+    const container = document.getElementById("configuratorContainer");
+
+    // ⬇️ TOGGLE BEHAVIOR
+    if (!container.classList.contains("hidden")) {
+        container.classList.add("hidden");
+        return; // stop here — do NOT reload JSON
+    }
+
+    // ⬇️ If hidden, continue loading JSON and display it
     const url = "Configurator-Questions.json";
 
     try {
