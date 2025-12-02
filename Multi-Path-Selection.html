@@ -15,7 +15,7 @@ body {
   background: #f7f9fc;
   margin: 0;
   padding: 2rem;
-  font-size: 16px; /* base text size */
+  font-size: 16px;
   color: #1f2937;
 }
 .container {
@@ -79,23 +79,6 @@ h1, h2 {
   background-color: #eef2ff;
 }
 
-/* BUTTONS */
-button.primary {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  font-size: 1.05rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #2563eb;
-  color: white;
-  transition: background 0.2s ease-in-out;
-}
-button.primary:hover {
-  background-color: #1d4ed8;
-}
-
 /* TABLE */
 table {
   width: 100%;
@@ -127,17 +110,17 @@ tfoot td {
   background: #e0e7ff;
 }
 
-/* ACTION BUTTONS */
+/* ACTION BUTTONS - RESTORED TO ORIGINAL */
 .action-btn {
   display: inline-block;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1;
   margin: 0 2px;
-  width: 36px;
-  height: 32px;
+  width: 32px;
+  height: 28px;
   transition: all 0.15s ease;
 }
 .action-btn.add {
@@ -154,6 +137,21 @@ tfoot td {
 .action-btn.delete:hover {
   background-color: #dc2626;
 }
+button.primary {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+button.primary:hover {
+  background-color: #1d4ed8;
+}
 
 /* MOBILE RESPONSIVE */
 @media (max-width: 480px) {
@@ -167,11 +165,7 @@ tfoot td {
     font-size: 0.95rem;
     padding: 8px 10px;
   }
-  .action-btn {
-    width: 30px;
-    height: 28px;
-    font-size: 0.85rem;
-  }
+  .action-btn { width: 28px; height: 26px; font-size: 0.8rem; }
 }
 </style>
 </head>
