@@ -469,17 +469,21 @@ async function loadConfiguratorQuestions() {
         updateBumper();
         checkBodyOptionsComplete();
 
-        // Next button
-        nextButton.addEventListener("click", () => {
-            bodyOptionsContainer.classList.add("hidden");
-            nextSectionContainer.classList.remove("hidden");
-        });
+        // Next button click
+nextButton.addEventListener("click", () => {
+    // Hide Body Options completely
+    bodyOptionsContainer.style.display = "none";
+    // Show Next Section
+    nextSectionContainer.style.display = "block";
+});
 
-        // Back button
-        backButton.addEventListener("click", () => {
-            nextSectionContainer.classList.add("hidden");
-            bodyOptionsContainer.classList.remove("hidden");
-        });
+// Back button click
+backButton.addEventListener("click", () => {
+    // Hide Next Section
+    nextSectionContainer.style.display = "none";
+    // Show Body Options again
+    bodyOptionsContainer.style.display = "block";
+});
 
     } catch (err) {
         console.error("Error loading configurator data:", err);
