@@ -350,24 +350,21 @@ function startBlankQuote() {
 async function loadConfiguratorQuestions() {
     const container = document.getElementById("configuratorContainer");
 
-    // If container is already visible, just hide it (do NOT reload JSON)
+    // Toggle behavior
     if (!container.classList.contains("hidden")) {
         container.classList.add("hidden");
         return;
     }
 
-    // If already loaded once, just show it
+    // Already loaded? just show
     if (container.dataset.loaded === "true") {
         container.classList.remove("hidden");
         return;
     }
 
-    // Fetch JSON only once
-    const url = "Configurator-Questions.json";
     try {
-        const response = await fetch(url);
+        const response = await fetch("Configurator-Questions.json");
         const data = await response.json();
-
         const b = data[0].BibeauBodyOptions;
 
         const fieldMap = {
@@ -391,13 +388,13 @@ async function loadConfiguratorQuestions() {
             "Body-Prop": b.FixedValues.BodyProp
         };
 
+        // Populate selects / inputs
         for (let id in fieldMap) {
             const value = fieldMap[id];
             const element = document.getElementById(id);
             if (!element) continue;
 
             if (Array.isArray(value)) {
-                // Only populate if select is empty to avoid overwriting user choices
                 if (element.options.length <= 1) {
                     element.innerHTML = "";
                     value.forEach(v => {
@@ -408,83 +405,87 @@ async function loadConfiguratorQuestions() {
                     });
                 }
             } else {
-                // Only set value if it is empty
                 if (!element.value) element.value = value;
             }
         }
 
-        // Mark as loaded so we don't reload JSON again
+        // Mark as loaded
         container.dataset.loaded = "true";
         container.classList.remove("hidden");
+
+        // -------------------
+        // BODY OPTIONS NAVIGATION LOGIC
+        // -------------------
+
+        const doorSlopeSelect = document.getElementById("Door-Slope");
+        const bumperInput = document.getElementById("Bumper");
+
+        function updateBumper() {
+            const val = doorSlopeSelect.value;
+            if (val === 'Std. 8"' || val === '12"') {
+                bumperInput.value = '45°';
+            } else if (val === 'Straight') {
+                bumperInput.value = 'Straight';
+            } else {
+                bumperInput.value = '';
+            }
+        }
+
+        // List of Body Option select IDs
+        const bodyOptionSelects = [
+          "Body-Series",
+          "Body-Length",
+          "Side-Ht-F",
+          "Side-Ht-R",
+          "Doghouse-Depth",
+          "Extra-Ovals-Rear",
+          "Door-Slope",
+          "Hi-Lift-Tailgate",
+          "Coal-Door",
+          "Twistlocks",
+          "Light-Kit"
+        ].map(id => document.getElementById(id));
+
+        const nextButton = document.getElementById("nextToNextSection");
+        const backButton = document.getElementById("backToBodyOptions");
+        const bodyOptionsContainer = document.getElementById("configuratorContainer");
+        const nextSectionContainer = document.getElementById("nextSectionContainer");
+
+        // Check if all selections are made
+        function checkBodyOptionsComplete() {
+          const allSelected = bodyOptionSelects.every(sel => sel.value && sel.value !== "Select One");
+          nextButton.disabled = !allSelected;
+        }
+
+        // Attach change event to selects
+        bodyOptionSelects.forEach(sel => {
+          sel.addEventListener("change", () => {
+            checkBodyOptionsComplete();
+            updateBumper();
+          });
+        });
+
+        // Initialize
+        updateBumper();
+        checkBodyOptionsComplete();
+
+        // Next button
+        nextButton.addEventListener("click", () => {
+            bodyOptionsContainer.classList.add("hidden");
+            nextSectionContainer.classList.remove("hidden");
+        });
+
+        // Back button
+        backButton.addEventListener("click", () => {
+            nextSectionContainer.classList.add("hidden");
+            bodyOptionsContainer.classList.remove("hidden");
+        });
 
     } catch (err) {
         console.error("Error loading configurator data:", err);
         alert("Failed to load configurator data.");
     }
 }
-// Door Slope → Bumper dynamic formula
-const doorSlopeSelect = document.getElementById("Door-Slope");
-const bumperInput = document.getElementById("Bumper");
-
-function updateBumper() {
-    const val = doorSlopeSelect.value;
-    if (val === 'Std. 8"' || val === '12"') {
-        bumperInput.value = '45°';
-    } else if (val === 'Straight') {
-        bumperInput.value = 'Straight';
-    } else {
-        bumperInput.value = '';
-    }
-}
-      // BODY OPTIONS NAVIGATION LOGIC
-
-// List of Body Option select IDs
-const bodyOptionSelects = [
-  "Body-Series",
-  "Body-Length",
-  "Side-Ht-F",
-  "Side-Ht-R",
-  "Doghouse-Depth",
-  "Extra-Ovals-Rear",
-  "Door-Slope",
-  "Hi-Lift-Tailgate",
-  "Coal-Door",
-  "Twistlocks",
-  "Light-Kit"
-].map(id => document.getElementById(id));
-
-const nextButton = document.getElementById("nextToNextSection");
-const backButton = document.getElementById("backToBodyOptions");
-const bodyOptionsContainer = document.getElementById("configuratorContainer");
-const nextSectionContainer = document.getElementById("nextSectionContainer");
-
-// Check if all selections are made
-function checkBodyOptionsComplete() {
-  const allSelected = bodyOptionSelects.every(sel => sel.value && sel.value !== "Select One");
-  nextButton.disabled = !allSelected;
-}
-
-// Attach change event to all Body Option selects
-bodyOptionSelects.forEach(sel => {
-  sel.addEventListener("change", () => {
-    checkBodyOptionsComplete();
-    // Optional: update formula-driven fields if any
-    updateBumper();
-  });
-});
-
-// Next button click
-nextButton.addEventListener("click", () => {
-  bodyOptionsContainer.classList.add("hidden");
-  nextSectionContainer.classList.remove("hidden");
-});
-
-// Back button click
-backButton.addEventListener("click", () => {
-  nextSectionContainer.classList.add("hidden");
-  bodyOptionsContainer.classList.remove("hidden");
-});
-
 
 // Initialize on load
 updateBumper();
